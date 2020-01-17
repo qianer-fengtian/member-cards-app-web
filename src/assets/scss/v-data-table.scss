@@ -1,0 +1,12 @@
+.v-data-table {
+  &__wrapper {
+    tbody {
+      td {
+        max-width: 500px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}
