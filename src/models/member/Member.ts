@@ -7,8 +7,9 @@ export type MemberResponse = {
   selfAppeal: string
   departmentId: string
   avatar: string
-  modifiedDate: number
   deleted: boolean
+  registeredDate: number
+  modifiedDate: number
 }
 
 export class Member {
@@ -20,8 +21,9 @@ export class Member {
   selfAppeal: string
   departmentId: string
   avatar: string
-  modifiedDate: number
   deleted: boolean
+  registeredDate: number
+  modifiedDate: number
 
   private constructor() {}
 
@@ -35,8 +37,9 @@ export class Member {
     member.selfAppeal = res.selfAppeal
     member.departmentId = res.departmentId
     member.avatar = res.avatar
-    member.modifiedDate = res.modifiedDate
     member.deleted = res.deleted
+    member.registeredDate = res.registeredDate
+    member.modifiedDate = res.modifiedDate
     return member
   }
 

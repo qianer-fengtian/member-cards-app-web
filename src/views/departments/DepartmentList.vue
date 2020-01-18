@@ -60,6 +60,10 @@ export default class DepartmentList extends Vue {
         sortable: false,
       },
       {
+        text: '部署コード',
+        value: 'code',
+      },
+      {
         text: '部署名',
         value: 'name',
       },

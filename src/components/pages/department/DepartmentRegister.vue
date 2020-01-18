@@ -25,6 +25,14 @@
         >
           <v-container>
             <v-text-field
+              v-model="department.code"
+              counter="20"
+              label="部署コード"
+              outlined
+              required
+              :rules="rule.code"
+            />
+            <v-text-field
               v-model="department.name"
               counter="10"
               label="部署名"

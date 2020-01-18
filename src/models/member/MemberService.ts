@@ -7,13 +7,14 @@ export default {
       id: uuidv4(),
       code: '',
       name: '',
+      avatar: '',
       birthDate: 0,
       specialty: '',
       selfAppeal: '',
       departmentId: '',
-      avatar: '',
-      modifiedDate: 0,
       deleted: false,
+      registeredDate: 0,
+      modifiedDate: 0,
     })
   },
 
