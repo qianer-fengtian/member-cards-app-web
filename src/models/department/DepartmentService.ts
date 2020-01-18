@@ -1,3 +1,4 @@
+import axios from '@/plugins/axios'
 import {Department, DepartmentResponse} from '@/models/department/Department'
 import uuidv4 from 'uuid/v4'
 
@@ -14,51 +15,25 @@ export default {
   },
 
   async search(): Promise<Array<Department>> {
-    const res = await fetch('http://localhost:8080/departments')
-    const data = await res.json()
-    return data.map((e: DepartmentResponse) => Department.getInstance(e))
+    const res = await axios.get('/departments')
+    return res.data.map((e: DepartmentResponse) => Department.getInstance(e))
   },
 
   async select(id: String): Promise<Department> {
-    const res = await fetch(`http://localhost:8080/departments/${id}`)
-    const data = await res.json()
-    return data
+    const res = await axios.get(`/departments/${id}`)
+    return Department.getInstance(res.data)
   },
 
-  async register(department: Department): Promise<Department> {
-    const res = await fetch(`http://localhost:8080/departments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(department)
-    })
-    const data = await res.json()
-    return data
+  async register(department: Department) {
+    await axios.post(`/departments`, department)
   },
 
-  async update(department: Department): Promise<Department> {
-    const res = await fetch(`http://localhost:8080/departments`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(department)
-    })
-    const data = await res.json()
-    return data
+  async update(department: Department) {
+    await axios.put(`/departments`, department)
   },
 
-  async remove(department: Department): Promise<Department> {
+  async remove(department: Department) {
     department.deleted = true
-    const res = await fetch(`http://localhost:8080/departments`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(department)
-    })
-    const data = await res.json()
-    return data
+    await axios.put(`/departments`, department)
   }
 }

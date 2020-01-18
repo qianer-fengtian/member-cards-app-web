@@ -1,3 +1,4 @@
+import axios from '@/plugins/axios'
 import {Member, MemberResponse} from '@/models/member/Member'
 import uuidv4 from 'uuid/v4'
 
@@ -19,51 +20,25 @@ export default {
   },
 
   async search(): Promise<Array<Member>> {
-    const res = await fetch('http://localhost:8080/members')
-    const data = await res.json()
-    return data.map((e: MemberResponse) => Member.getInstance(e))
+    const res = await axios.get("/members")
+    return res.data.map((e: MemberResponse) => Member.getInstance(e))
   },
 
   async select(id: String): Promise<Member> {
-    const res = await fetch(`http://localhost:8080/members/${id}`)
-    const data = await res.json()
-    return data
+    const res = await axios.get(`/members/${id}`)
+    return Member.getInstance(res.data)
   },
 
-  async register(member: Member): Promise<Member> {
-    const res = await fetch(`http://localhost:8080/members`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(member)
-    })
-    const data = await res.json()
-    return data
+  async register(member: Member) {
+    await axios.post('members', member)
   },
 
-  async update(member: any): Promise<Member> {
-    const res = await fetch(`http://localhost:8080/members`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(member)
-    })
-    const data = await res.json()
-    return data
+  async update(member: any) {
+    await axios.put('/members', member)
   },
 
-  async remove(member: any): Promise<Member> {
+  async remove(member: any) {
     member.deleted = true
-    const res = await fetch(`http://localhost:8080/members`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(member)
-    })
-    const data = await res.json()
-    return data
+    await axios.put('/members', member)
   }
 }
