@@ -15,35 +15,31 @@
           </section>
         </template>
         <template v-if="finished">
-          <v-list>
-            <v-list-item-group>
-              <v-list-item
-                v-for="question in questions"
-                :key="question.id"
-                color="primary"
-              >
-                <Avatar
-                  v-model="question.member.avatar"
-                  :size="64"
-                />
-                <v-list-item-content>
-                  <v-list-item-title v-text="question.correct"></v-list-item-title>
-                  <v-list-item-subtitle>
-                    あなたの答え: {{ question.choice }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-spacer />
-                <v-list-item-icon>
-                  <template v-if="question.result">
-                    <v-icon color="success">mdi-check</v-icon>
-                  </template>
-                  <template v-if="!question.result">
-                    <v-icon color="error">mdi-close</v-icon>
-                  </template>
-                </v-list-item-icon>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+          <template v-for="question in questions">
+            <v-card
+              :key="question.id"
+              class="ma-2"
+            >
+              <v-card-title>
+                <template v-if="question.result">
+                  <v-icon color="success">mdi-check</v-icon>
+                </template>
+                <template v-if="!question.result">
+                  <v-icon color="error">mdi-close</v-icon>
+                </template>
+                あなたの答え: {{ question.choice }}
+              </v-card-title>
+              <v-card-text>
+                <MemberListItem :member="question.member" />
+              </v-card-text>
+            </v-card>
+          </template>
+          <v-btn
+            color="primary"
+            @click="start"
+          >
+            もう一度やる
+          </v-btn>
         </template>
       </v-col>
     </v-row>
@@ -60,6 +56,7 @@ import QuestionService from '@/models/quiz/QuestionService'
 @Component({
   components: {
     Avatar: () => import('@/components/modules/avatar/Avatar.vue'),
+    MemberListItem: () => import('@/components/pages/member/MemberListItem.vue'),
     QuestionCard: () => import('@/components/pages/quiz/QuestionCard.vue'),
   },
 })
@@ -87,6 +84,7 @@ export default class AnswerSheets extends Vue {
   }
 
   private start() {
+    this.currentIndex = 0
     this.loading = true
     this.questions = QuestionService.generateQuestions(this.members, this.numOfQuestions, this.numOfChoices)
     this.loading = false

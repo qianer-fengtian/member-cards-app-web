@@ -86,14 +86,12 @@
         <v-spacer />
         <v-btn
           color="primary"
-          outlined
           @click="cancel"
         >
           キャンセル
         </v-btn>
         <v-btn
           color="primary"
-          outlined
           :disabled="!valid"
           :loading="loading"
           @click="register"
@@ -150,6 +148,10 @@ export default class MemberRegister extends Vue {
     try {
       this.loading = true
       await MemberService.register(this.member)    
+      this.$notify({
+        type: 'success',
+        text: '登録完了しました',
+      });  
     } catch (err) {
       console.error(err)
     } finally {

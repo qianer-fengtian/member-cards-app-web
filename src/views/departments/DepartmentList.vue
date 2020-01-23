@@ -5,6 +5,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        sort-by="code"
         :headers="headers"
         :items="departments"
         :search="keyword"

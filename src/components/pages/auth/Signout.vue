@@ -14,6 +14,11 @@ export default class Signout extends Vue {
     try {
       await AuthService.logout()
       this.$router.push('/signin')
+      this.$notify({
+        type: 'success',
+        title: 'サインアウト',
+        text: 'サインアウトしました',
+      });      
     } catch (err) {
       localStorage.removeItem('user-token')
       this.$store.commit('AUTH_ERROR')

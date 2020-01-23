@@ -1,10 +1,15 @@
 import Vue from 'vue'
+import Notifications from 'vue-notification'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from '@/plugins/axios'
-import vuetify from './plugins/vuetify'
-import '@/assets/scss/v-data-table.scss'
+import vuetify from '@/plugins/vuetify'
+
+require('@/assets/scss/main.scss')
+
+
+Vue.use(Notifications)
 
 Vue.config.productionTip = false
 

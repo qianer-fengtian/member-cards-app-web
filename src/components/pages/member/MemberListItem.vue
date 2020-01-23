@@ -75,7 +75,6 @@
             <v-spacer />
             <v-btn
               color="primary"
-              outlined
               @click="cancel"
             >
               閉じる

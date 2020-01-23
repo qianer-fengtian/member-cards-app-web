@@ -29,14 +29,12 @@
         <v-spacer />
         <v-btn
           color="warning"
-          outlined
           @click="cancel"
         >
           キャンセル
         </v-btn>
         <v-btn
           color="warning"
-          outlined
           :loading="loading"
           @click="remove"
         >
@@ -72,6 +70,10 @@ export default class MemberRemove extends Vue {
     try {
       this.loading = true
       await MemberService.remove(this.member)
+      this.$notify({
+        type: 'success',
+        text: '削除完了しました',
+      });
     } catch (err) {
       console.error(err)
     } finally {

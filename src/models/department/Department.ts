@@ -27,4 +27,12 @@ export class Department {
     department.modifiedDate = res.modifiedDate
     return department
   }
+
+  get formattedRegisteredDate() {
+    return new Date(this.registeredDate).toISOString().slice(0,10)
+  }
+
+  get formattedModifiedDate() {
+    return new Date(this.modifiedDate).toISOString().slice(0,10)
+  }
 }

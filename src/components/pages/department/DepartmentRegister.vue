@@ -47,14 +47,12 @@
         <v-spacer />
         <v-btn
           color="primary"
-          outlined
           @click="cancel"
         >
           キャンセル
         </v-btn>
         <v-btn
           color="primary"
-          outlined
           :disabled="!valid"
           :loading="loading"
           @click="register"
@@ -100,6 +98,10 @@ export default class DepartmentRegister extends Vue {
     try {
       this.loading = true
       await DepartmentService.register(this.department)
+      this.$notify({
+        type: 'success',
+        text: '登録完了しました',
+      });
     } catch (err) {
       console.error(err)
     } finally {

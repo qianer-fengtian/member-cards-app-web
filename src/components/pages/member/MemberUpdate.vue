@@ -86,14 +86,12 @@
         <v-spacer />
         <v-btn
           color="success"
-          outlined
           @click="cancel"
         >
           キャンセル
         </v-btn>
         <v-btn
           color="success"
-          outlined
           :disabled="!valid"
           :loading="loading"
           @click="update"
@@ -153,6 +151,10 @@ export default class MemberUpdate extends Vue {
     try {
       this.loading = true
       await MemberService.update(this.member)
+      this.$notify({
+        type: 'success',
+        text: '更新完了しました',
+      });
     } catch (err) {
       console.error(err)
     } finally {

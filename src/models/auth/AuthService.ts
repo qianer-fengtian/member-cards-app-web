@@ -13,6 +13,11 @@ export default {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   },
 
+  async isAdmin() {
+    const res = await axios.get('/role')
+    return res.data === 'admin'
+  },
+
   async logout() {
     localStorage.removeItem('user-token')
     store.commit('AUTH_LOGOUT')

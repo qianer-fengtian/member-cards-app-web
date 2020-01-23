@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { Route } from 'vue-router'
 import store from '@/store'
+import AuthService from '@/models/auth/AuthService'
 
 Vue.use(VueRouter)
 
@@ -24,10 +25,15 @@ const ifAuthenticated = (to: Route, from: Route, next: Function) => {
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/Home.vue'),
+    name: 'index',
+    component: () => import('@/views/Index.vue'),
     beforeEnter: ifAuthenticated,
     children: [
+      {
+        path: '/home',
+        name: 'home',    
+        component: () => import('@/views/Home.vue'),
+      },
       {
         path: '/member-cards',
         name: 'member-cards',    
@@ -67,6 +73,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+})
+
+const AUTHORIZED_VIEWS = [
+  'member-list',
+  'department-list',
+]
+
+router.beforeEach(async (to: Route, from: Route, next: Function) => {
+  if (AUTHORIZED_VIEWS.includes(to.name)) {
+    const isAdmin = await AuthService.isAdmin()
+    next(isAdmin)
+  } else {
+    next()
+  }
 })
 
 export default router

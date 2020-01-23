@@ -1,6 +1,14 @@
 module.exports = {
   "transpileDependencies": [
     "axios",
-    "vuetify"
-  ]
+    "vuetify",
+  ],
+
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: '@import "./src/assets/scss/main.scss";'
+      }
+    }
+  }
 }
