@@ -103,7 +103,10 @@ export default class DepartmentRegister extends Vue {
         text: '登録完了しました',
       });
     } catch (err) {
-      console.error(err)
+      this.$notify({
+        type: 'error',
+        text: '登録に失敗しました',
+      });
     } finally {
       this.loading = false
     }

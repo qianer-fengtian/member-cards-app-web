@@ -21,7 +21,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@types/node": "^13.1.6",
+    "@types/node": "12.12.6",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-router": "^4.1.0",

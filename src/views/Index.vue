@@ -72,7 +72,7 @@ export default class App extends Vue {
   get items(): Array<object> {
     return [
       {
-        name: 'member-cards',
+        name: 'home',
         icon: 'mdi-account-search',
         text: '社員一覧をみる',
         hidden: false,        

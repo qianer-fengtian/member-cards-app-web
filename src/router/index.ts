@@ -14,7 +14,6 @@ const ifNotAuthenticated = (to: Route, from: Route, next: Function) => {
 }
 
 const ifAuthenticated = (to: Route, from: Route, next: Function) => {
-  console.log(store.getters.isAuthenticated)
   if (store.getters.isAuthenticated) {
     next()
     return
@@ -33,11 +32,6 @@ const routes = [
         path: '/home',
         name: 'home',    
         component: () => import('@/views/Home.vue'),
-      },
-      {
-        path: '/member-cards',
-        name: 'member-cards',    
-        component: () => import('@/views/members/MemberCardList.vue'),
       },
       {
         path: '/members',
@@ -81,7 +75,7 @@ const AUTHORIZED_VIEWS = [
 ]
 
 router.beforeEach(async (to: Route, from: Route, next: Function) => {
-  if (AUTHORIZED_VIEWS.includes(to.name)) {
+  if (to.name && AUTHORIZED_VIEWS.includes(to.name)) {
     const isAdmin = await AuthService.isAdmin()
     next(isAdmin)
   } else {

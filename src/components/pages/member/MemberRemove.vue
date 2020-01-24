@@ -75,7 +75,10 @@ export default class MemberRemove extends Vue {
         text: '削除完了しました',
       });
     } catch (err) {
-      console.error(err)
+      this.$notify({
+        type: 'error',
+        text: '削除に失敗しました',
+      });
     } finally {
       this.loading = false
     }

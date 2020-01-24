@@ -22,7 +22,6 @@ export default class Signout extends Vue {
     } catch (err) {
       localStorage.removeItem('user-token')
       this.$store.commit('AUTH_ERROR')
-      console.error(err)
     }
   }
 }

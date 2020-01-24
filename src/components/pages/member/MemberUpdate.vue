@@ -156,7 +156,10 @@ export default class MemberUpdate extends Vue {
         text: '更新完了しました',
       });
     } catch (err) {
-      console.error(err)
+      this.$notify({
+        type: 'error',
+        text: '更新に失敗しました',
+      });
     } finally {
       this.loading = false
     }
