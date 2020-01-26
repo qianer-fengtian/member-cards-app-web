@@ -6,8 +6,10 @@
     <v-card-text>
       <v-data-table
         sort-by="code"
+        loading-text="検索中..."
         :headers="headers"
         :items="departments"
+        :loading="loading"
         :search="keyword"
       >
         <template v-slot:top>
@@ -52,6 +54,7 @@ import { Department } from '@/models/department/Department'
 export default class DepartmentList extends Vue {
   private departments: Array<Department> = []
   private dialog: boolean = false
+  private loading: boolean  = false
   private keyword: string = ''
   
   get headers(): Array<object> {
@@ -76,7 +79,18 @@ export default class DepartmentList extends Vue {
   }
 
   private async search() {
-    this.departments = await DepartmentService.search()
+    try {
+      this.loading = true
+      this.departments = await DepartmentService.search()
+    } catch (err) {
+      this.$notify({
+        type: 'error',
+        text: '部署の取得に失敗しました',
+      });      
+      this.departments = []
+    } finally {
+      this.loading = false
+    }
   }
 }
 </script>

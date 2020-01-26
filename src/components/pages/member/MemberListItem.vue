@@ -2,6 +2,7 @@
   <v-card
     hover
     outlined
+    :loading="loading"
     @click="show"
   >
     <v-container>
@@ -24,7 +25,7 @@
         scrollable
         width="800"
       >
-        <v-card>
+        <v-card :loading="loading">
           <v-card-title>
             {{ member.name }}
           </v-card-title>
@@ -99,6 +100,9 @@ import MemberService from '../../../models/member/MemberService'
 export default class MemberListItem extends Vue {
   @Prop({type: Object, default: MemberService.newInstance()})
   private member: Member
+
+  @Prop({type: Boolean, default: false})
+  private loading: boolean
 
   private dialog: boolean = false
 

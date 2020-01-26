@@ -8,7 +8,10 @@
           md="4"
           lg="3"
         >
-          <MemberListItem :member="member" />
+          <MemberListItem
+            :member="member"
+            :loading="loading"
+          />
         </v-col> 
       </template>
     </v-row>
@@ -27,10 +30,31 @@ import {Member} from '@/models/member/Member'
   },
 })
 export default class MemberList extends Vue {
+  private loading: boolean = false
   private members: Array<Member> = []
 
-  async beforeCreate() {
-    this.members = await MemberService.search()
+  async created() {
+    this.members = Array(20).join(',').split(',').map(() => this.getDummyMember())
+
+    try {
+      this.loading = true
+      this.members = await MemberService.search()
+    } catch (err) {
+      this.$notify({
+        type: 'error',
+        text: 'メンバーカードの取得に失敗しました',
+      });      
+      this.members = []
+    } finally {
+      this.loading = false
+    }
+  }
+
+  getDummyMember() {
+    const member = MemberService.newInstance()
+    member.code = '-'
+    member.name = '-'
+    return member
   }
 }
 </script>

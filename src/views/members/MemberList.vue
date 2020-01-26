@@ -6,8 +6,10 @@
     <v-card-text>
       <v-data-table
         sort-by="code"
+        loading-text="検索中..."
         :headers="headers"
         :items="members"
+        :loading="loading"
         :search="keyword"
       >
         <template v-slot:top>
@@ -52,6 +54,7 @@ import { Member } from '@/models/member/Member'
 export default class MemberList extends Vue {
   private members: Array<Member> = []
   private dialog: boolean = false
+  private loading: boolean  = false
   private keyword: string = ''
   
   private get headers() {
@@ -96,7 +99,18 @@ export default class MemberList extends Vue {
   }
 
   private async search() {
-    this.members = await MemberService.search()
+    try {
+      this.loading = true
+      this.members = await MemberService.search()
+    } catch (err) {
+      this.$notify({
+        type: 'error',
+        text: 'メンバーの取得に失敗しました',
+      });      
+      this.members = []
+    } finally {
+      this.loading = false
+    }
   }
 }
 </script>

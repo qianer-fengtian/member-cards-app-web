@@ -13,7 +13,7 @@
         更新
       </v-btn>
     </template>
-    <v-card>
+    <v-card :loading="initing">
       <v-card-title>
         部署を更新する
       </v-card-title>
@@ -30,6 +30,7 @@
               label="部署コード"
               outlined
               required
+              :disabled="initing"
               :rules="rule.code"
             />
             <v-text-field
@@ -38,6 +39,7 @@
               label="部署名"
               outlined
               required
+              :disabled="initing"
               :rules="rule.name"
             />
           </v-container>
@@ -78,6 +80,7 @@ export default class DepartmentUpdate extends Vue {
   private department: Department = DepartmentService.newInstance()
   private dialog: boolean = false
   private valid: boolean = false
+  private initing: boolean = false
   private loading: boolean = false
 
   private get refs(): any {
@@ -90,7 +93,18 @@ export default class DepartmentUpdate extends Vue {
 
   @Watch('dialog')
   private async dialogChanged() {
-    this.department = await DepartmentService.select(this.id)
+    try {
+      this.initing = true
+      this.department = await DepartmentService.select(this.id)
+    } catch (err) {
+      this.$notify({
+        type: 'error',
+        text: '部署の情報がありません',
+      });
+      this.cancel()
+    } finally {
+      this.initing = false
+    }
   }
 
   private async update() {

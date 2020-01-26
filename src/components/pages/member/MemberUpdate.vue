@@ -13,7 +13,7 @@
         更新
       </v-btn>
     </template>
-    <v-card>
+    <v-card :loading="initing">
       <v-card-title>
         メンバーを更新する
       </v-card-title>
@@ -42,6 +42,7 @@
                   label="ユーザID"
                   outlined
                   required
+                  :disabled="initing"
                   :rules="rule.code"
                 />
                 <v-text-field
@@ -50,6 +51,7 @@
                   label="ユーザ名"
                   outlined
                   required
+                  :disabled="initing"
                   :rules="rule.name"
                 />
                 <v-select
@@ -59,6 +61,7 @@
                   item-value="id"
                   outlined
                   required
+                  :disabled="initing"
                   :items="departments"
                   :rules="rule.departmentId"
                 />
@@ -67,6 +70,7 @@
                   counter="100"
                   label="得意分野"
                   outlined
+                  :disabled="initing"
                   :rules="rule.specialty"
                 />
                 <v-textarea
@@ -75,6 +79,7 @@
                   label="自己アピール"
                   outlined
                   rows="10"
+                  :disabled="initing"
                   :rules="rule.selfAppeal"
                 />
               </v-col>
@@ -124,6 +129,7 @@ export default class MemberUpdate extends Vue {
   private departments: Array<Department> = []
   private dialog: boolean = false
   private valid: boolean = false
+  private initing: boolean = false
   private loading: boolean = false
 
   private get refs(): any {
@@ -136,7 +142,18 @@ export default class MemberUpdate extends Vue {
 
   @Watch('dialog')
   private async dialogChanged() {
-    this.member = await MemberService.select(this.id)
+    try {
+      this.initing = true
+      this.member = await MemberService.select(this.id)
+    } catch (err) {
+      this.$notify({
+        type: 'error',
+        text: 'メンバーの情報がありません',
+      });
+      this.cancel()
+    } finally {
+      this.initing = false
+    }
   }
 
   async created() {
