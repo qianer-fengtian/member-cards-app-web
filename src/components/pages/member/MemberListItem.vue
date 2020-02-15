@@ -55,6 +55,24 @@
                     outlined
                     readonly
                   />
+                  <v-text-field
+                    v-model="member.genderName"
+                    label="性別"
+                    outlined
+                    readonly
+                  />
+                  <v-text-field
+                    v-model="member.formattedBirthDate"
+                    label="生年月日"
+                    outlined
+                    readonly
+                  />
+                  <v-text-field
+                    v-model="member.formattedJoinedDate"
+                    label="入社年月日"
+                    outlined
+                    readonly
+                  />                  
                   <v-textarea
                     v-model="member.specialty"
                     label="得意分野"

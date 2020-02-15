@@ -1,8 +1,18 @@
+import * as utils from '@/utils'
+
+export const genders = [
+  { id: '0', name: 'その他' },
+  { id: '1', name: '男性' },
+  { id: '2', name: '女性' },
+]
+
 export type MemberResponse = {
   id: string
   code: string
   name: string
   birthDate: number
+  joinedDate: number
+  gender: string
   specialty: string
   selfAppeal: string
   departmentId: string
@@ -17,6 +27,8 @@ export class Member {
   code: string
   name: string
   birthDate: number
+  joinedDate: number
+  gender: string
   specialty: string
   selfAppeal: string
   departmentId: string
@@ -33,6 +45,8 @@ export class Member {
     member.code = res.code
     member.name = res.name
     member.birthDate = res.birthDate
+    member.joinedDate = res.joinedDate
+    member.gender = res.gender
     member.specialty = res.specialty
     member.selfAppeal = res.selfAppeal
     member.departmentId = res.departmentId
@@ -43,15 +57,31 @@ export class Member {
     return member
   }
 
+  get genderName() {
+    return genders.filter(gender => gender.id === this.gender)[0].name  // 微妙
+  }
+
   get formattedBirthDate() {
-    return new Date(this.birthDate).toISOString().slice(0,10)
+    return utils.convertUnixMillsToISODate(this.birthDate)
+  }
+
+  set formattedBirthDate(value) {
+    this.birthDate = utils.convertISODateToUnixMills(value)
+  }
+
+  get formattedJoinedDate() {
+    return utils.convertUnixMillsToISODate(this.joinedDate)
+  }
+
+  set formattedJoinedDate(value) {
+    this.joinedDate = utils.convertISODateToUnixMills(value)
   }
 
   get formattedRegisteredDate() {
-    return new Date(this.registeredDate).toISOString().slice(0,10)
+    return utils.convertUnixMillsToISODate(this.registeredDate)
   }
 
   get formattedModifiedDate() {
-    return new Date(this.modifiedDate).toISOString().slice(0,10)
+    return utils.convertUnixMillsToISODate(this.modifiedDate)
   }
 }

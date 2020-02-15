@@ -8,6 +8,12 @@ export const MemberRules = () => ({
     (v: string) => !!v || 'ユーザ名は必須です',
     (v: string) => v.length <= 10 || 'ユーザ名は10文字以下である必要があります',
   ],
+  birthDate: [
+    (v: string) => !!v || '生年月日は必須です',
+  ],
+  joinedDate: [
+    (v: string) => !!v || '入社年月日は必須です',
+  ],
   departmentId: [
     (v: string) => !!v || '所属部署は必須です',
   ],

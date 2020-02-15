@@ -76,10 +76,22 @@ export default class MemberList extends Vue {
         width: 150,
       },
       {
+        text: '性別',
+        align: 'center',
+        value: 'genderName',
+        width: 100,
+      },
+      {
         text: '生年月日',
         align: 'center',
         value: 'formattedBirthDate',
         width: 100,
+      },
+      {
+        text: '入社年月日',
+        align: 'center',
+        value: 'formattedJoinedDate',
+        width: 120,
       },
       {
         text: '得意分野',

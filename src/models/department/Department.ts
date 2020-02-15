@@ -1,3 +1,5 @@
+import * as utils from '@/utils'
+
 export type DepartmentResponse = {
   id: string
   code: string
@@ -29,10 +31,10 @@ export class Department {
   }
 
   get formattedRegisteredDate() {
-    return new Date(this.registeredDate).toISOString().slice(0,10)
+    return utils.convertUnixMillsToISODate(this.registeredDate)
   }
 
   get formattedModifiedDate() {
-    return new Date(this.modifiedDate).toISOString().slice(0,10)
+    return utils.convertUnixMillsToISODate(this.modifiedDate)
   }
 }

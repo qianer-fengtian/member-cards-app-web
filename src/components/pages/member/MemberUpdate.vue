@@ -55,6 +55,29 @@
                   :rules="rule.name"
                 />
                 <v-select
+                  v-model="member.gender"
+                  label="性別"
+                  item-text="name"
+                  item-value="id"
+                  outlined
+                  required
+                  :items="genders"
+                />
+                <DatePicker
+                  v-model="member.formattedBirthDate"
+                  label="生年月日"
+                  outlined
+                  required
+                  :rules="rule.birthDate"
+                />
+                <DatePicker
+                  v-model="member.formattedJoinedDate"
+                  label="入社年月日"
+                  outlined
+                  required
+                  :rules="rule.joinedDate"
+                />
+                <v-select
                   v-model="member.departmentId"
                   label="所属部署"
                   item-text="name"
@@ -110,7 +133,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { Member } from '@/models/member/Member'
+import { Member, genders } from '@/models/member/Member'
 import { MemberRules } from '@/models/member/MemberRules'
 import MemberService from '@/models/member/MemberService'
 import { Department } from '@/models/department/Department'
@@ -119,6 +142,7 @@ import DepartmentService from '@/models/department/DepartmentService'
 @Component({
   components: {
     AvatarUpload: () => import('@/components/modules/avatar/AvatarUpload.vue'),
+    DatePicker: () => import('@/components/modules/picker/DatePicker.vue'),
   },
 })
 export default class MemberUpdate extends Vue {
@@ -138,6 +162,10 @@ export default class MemberUpdate extends Vue {
 
   private get rule() {
     return MemberRules()
+  }
+
+  private get genders() {
+    return genders
   }
 
   @Watch('dialog')
