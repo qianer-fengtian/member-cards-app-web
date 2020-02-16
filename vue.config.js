@@ -1,6 +1,10 @@
 module.exports = {
   publicPath: './',
 
+  devServer: {
+    port: 80,
+  },
+
   "transpileDependencies": [
     "axios",
     "vuetify",
