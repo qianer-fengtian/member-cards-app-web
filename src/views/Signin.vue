@@ -101,7 +101,7 @@ export default class Signin extends Vue {
     try {
       this.loading = true
       await AuthService.login(user)
-      this.$router.push('/home')
+      this.$router.push('/dashboard')
       this.$notify({
         type: 'success',
         title: '認証成功',
