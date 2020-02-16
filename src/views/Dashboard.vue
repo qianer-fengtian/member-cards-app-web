@@ -20,13 +20,17 @@
         cols="12"
         sm="6"
       >
-        <PopulationByAge :population-by-age="statistics.populationByAge" />
+        <template v-if="!loading">
+          <PopulationByAge :population-by-age="statistics.populationByAge" />
+        </template>
       </v-col>
       <v-col
         cols="12"
         sm="6"
       >
-        <NumberOfHiresPerYear :number-of-hires-per-year="statistics.numberOfHiresPerYear" />
+        <template v-if="!loading">
+          <NumberOfHiresPerYear :number-of-hires-per-year="statistics.numberOfHiresPerYear" />
+        </template>
       </v-col>
     </v-row>
   </v-container>
