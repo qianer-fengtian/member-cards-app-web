@@ -6,6 +6,14 @@ export const genders = [
   { id: '2', name: '女性' },
 ]
 
+export type MemberStatistics = {  
+  total: number,
+  maleTotal: number,
+  femaleTotal: number,
+  numberOfHiresPerYear: object,
+  populationByAge: object,
+}
+
 export type MemberResponse = {
   id: string
   code: string

@@ -1,5 +1,5 @@
 import axios from '@/plugins/axios'
-import {Member, MemberResponse} from '@/models/member/Member'
+import {Member, MemberResponse, MemberStatistics} from '@/models/member/Member'
 import uuidv4 from 'uuid/v4'
 
 export default {
@@ -29,6 +29,11 @@ export default {
   async select(id: String): Promise<Member> {
     const res = await axios.get(`/members/${id}`)
     return Member.getInstance(res.data)
+  },
+
+  async statistics(): Promise<MemberStatistics> {
+    const res = await axios.get("/members/statistics")
+    return res.data
   },
 
   async register(member: Member) {

@@ -7,3 +7,7 @@ export const convertUnixMillsToISODate = (mills: number) => {
 export const convertISODateToUnixMills = (date: string) => {
   return +moment(date)
 }
+
+export const now = () => {
+  return moment()
+}

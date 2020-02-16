@@ -29,9 +29,14 @@ const routes = [
     beforeEnter: ifAuthenticated,
     children: [
       {
-        path: '/home',
-        name: 'home',    
-        component: () => import('@/views/Home.vue'),
+        path: '/dashboard',
+        name: 'dashboard',    
+        component: () => import('@/views/Dashboard.vue'),
+      },
+      {
+        path: '/cards',
+        name: 'card-list',    
+        component: () => import('@/views/cards/CardList.vue'),
       },
       {
         path: '/members',
