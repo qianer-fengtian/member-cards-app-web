@@ -88,7 +88,9 @@ export default class numberOfHiresPerYear extends Vue {
 
   private get averageHire() {
     if (Object.keys(this.numberOfHiresPerYear).length === 0) return 0
-    const averageHire = Object.keys(this.numberOfHiresPerYear).map(e => +e).reduce((a, b) => a + b, 0) / Object.keys(this.numberOfHiresPerYear).length
+    const minYear = Math.min(...Object.keys(this.numberOfHiresPerYear).map((e) => +e))
+    const maxYear = utils.now().year()
+    const averageHire = Object.values(this.numberOfHiresPerYear).map(e => +e).reduce((a, b) => a + b, 0) / (maxYear - minYear)
     return Math.round(averageHire)
   }
 }
