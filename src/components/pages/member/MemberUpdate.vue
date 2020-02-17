@@ -37,15 +37,6 @@
                 sm="8"
               >
                 <v-text-field
-                  v-model="member.code"
-                  counter="50"
-                  label="ユーザID"
-                  outlined
-                  required
-                  :disabled="initing"
-                  :rules="rule.code"
-                />
-                <v-text-field
                   v-model="member.name"
                   counter="10"
                   label="ユーザ名"

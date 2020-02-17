@@ -6,7 +6,6 @@ export default {
   newInstance(): Department {
     return Department.getInstance({
       id: uuidv4(),
-      code: '',
       name: '',
       deleted: false,
       registeredDate: 0,

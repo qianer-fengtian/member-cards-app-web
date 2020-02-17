@@ -52,7 +52,6 @@ export default class MemberList extends Vue {
 
   getDummyMember() {
     const member = MemberService.newInstance()
-    member.code = '-'
     member.name = '-'
     return member
   }

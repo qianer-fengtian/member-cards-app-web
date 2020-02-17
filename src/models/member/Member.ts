@@ -16,7 +16,6 @@ export type MemberStatistics = {
 
 export type MemberResponse = {
   id: string
-  code: string
   name: string
   birthDate: number
   joinedDate: number
@@ -32,7 +31,6 @@ export type MemberResponse = {
 
 export class Member {
   id: string
-  code: string
   name: string
   birthDate: number
   joinedDate: number
@@ -50,7 +48,6 @@ export class Member {
   static getInstance(res: MemberResponse): Member {
     const member = new Member()
     member.id = res.id
-    member.code = res.code
     member.name = res.name
     member.birthDate = res.birthDate
     member.joinedDate = res.joinedDate

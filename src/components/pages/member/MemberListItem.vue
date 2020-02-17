@@ -11,9 +11,6 @@
           <v-list-item-title class="headline">
             {{ member.name }}
           </v-list-item-title>
-          <v-list-item-subtitle>
-            {{ member.code }}
-          </v-list-item-subtitle>
         </v-list-item-content>
         <Avatar
           v-model="member.avatar"
@@ -43,12 +40,6 @@
                   cols="12"
                   sm="8"
                 >
-                  <v-text-field
-                    v-model="member.code"
-                    label="ユーザID"
-                    outlined
-                    readonly
-                  />
                   <v-text-field
                     v-model="member.name"
                     label="ユーザ名"

@@ -6,7 +6,6 @@ export default {
   newInstance(): Member {
     return Member.getInstance({
       id: uuidv4(),
-      code: '',
       name: '',
       avatar: '',
       birthDate: 0,

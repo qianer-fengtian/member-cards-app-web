@@ -2,7 +2,6 @@ import * as utils from '@/utils'
 
 export type DepartmentResponse = {
   id: string
-  code: string
   name: string
   deleted: boolean
   registeredDate: number
@@ -11,7 +10,6 @@ export type DepartmentResponse = {
 
 export class Department {
   id: string
-  code: string
   name: string
   deleted: boolean
   registeredDate: number
@@ -22,7 +20,6 @@ export class Department {
   static getInstance(res: DepartmentResponse): Department {
     const department = new Department()
     department.id = res.id
-    department.code = res.code
     department.name = res.name
     department.deleted = res.deleted
     department.registeredDate = res.registeredDate

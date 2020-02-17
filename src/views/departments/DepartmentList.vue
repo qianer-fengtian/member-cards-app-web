@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        sort-by="code"
+        sort-by="name"
         loading-text="検索中..."
         :headers="headers"
         :items="departments"
@@ -62,10 +62,6 @@ export default class DepartmentList extends Vue {
       {
         value: 'action',
         sortable: false,
-      },
-      {
-        text: '部署コード',
-        value: 'code',
       },
       {
         text: '部署名',

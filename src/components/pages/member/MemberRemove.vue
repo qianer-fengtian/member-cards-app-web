@@ -22,7 +22,7 @@
           color="warning"
           outlined
         >
-          本当にユーザID: {{member.code}} を削除しますか？
+          本当にユーザ: {{member.name}} を削除しますか？
         </v-alert>
       </v-card-text>
       <v-card-actions>

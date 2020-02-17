@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        sort-by="code"
+        sort-by="name"
         loading-text="検索中..."
         :headers="headers"
         :items="members"
@@ -62,12 +62,6 @@ export default class MemberList extends Vue {
       {
         value: 'action',
         sortable: false,
-      },
-      {
-        text: 'ユーザID',
-        align: 'left',
-        value: 'code',
-        width: 150,
       },
       {
         text: '名前',

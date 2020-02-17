@@ -1,9 +1,4 @@
 export const MemberRules = () => ({
-  code: [
-    (v: string) => !!v || 'ユーザIDは必須です',
-    (v: string) => /^[0-9A-Za-z]+$/.test(v) || 'ユーザIDは英数字のみ入力できます',
-    (v: string) => v.length <= 50 || 'ユーザIDは50文字以下である必要があります',
-  ],
   name: [
     (v: string) => !!v || 'ユーザ名は必須です',
     (v: string) => v.length <= 10 || 'ユーザ名は10文字以下である必要があります',
