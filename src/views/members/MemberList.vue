@@ -5,7 +5,8 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        sort-by="name"
+        sort-by="formattedRegisteredDate"
+        sort-desc
         loading-text="検索中..."
         :headers="headers"
         :items="members"
@@ -62,10 +63,10 @@ export default class MemberList extends Vue {
       {
         value: 'action',
         sortable: false,
+        width: 100,
       },
       {
         text: '名前',
-        align: 'center',
         value: 'name',
         width: 150,
       },
@@ -96,6 +97,18 @@ export default class MemberList extends Vue {
         text: '自己アピール',
         value: 'selfAppeal',
         width: 500,
+      },
+      {
+        text: '登録年月日',
+        align: 'center',
+        value: 'formattedRegisteredDate',
+        width: 120,
+      },
+      {
+        text: '更新年月日',
+        align: 'center',
+        value: 'formattedModifiedDate',
+        width: 120,
       },
     ];
   }

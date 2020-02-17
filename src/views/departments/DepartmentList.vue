@@ -5,7 +5,8 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        sort-by="name"
+        sort-by="formattedRegisteredDate"
+        sort-desc
         loading-text="検索中..."
         :headers="headers"
         :items="departments"
@@ -62,10 +63,23 @@ export default class DepartmentList extends Vue {
       {
         value: 'action',
         sortable: false,
+        width: 100,
       },
       {
         text: '部署名',
         value: 'name',
+      },
+      {
+        text: '登録年月日',
+        align: 'center',
+        value: 'formattedRegisteredDate',
+        width: 120,
+      },
+      {
+        text: '更新年月日',
+        align: 'center',
+        value: 'formattedModifiedDate',
+        width: 120,
       },
     ];
   }
