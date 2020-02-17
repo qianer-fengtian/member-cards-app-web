@@ -49,6 +49,11 @@ const routes = [
         component: () => import('@/views/departments/DepartmentList.vue'),
       },
       {
+        path: '/teams',
+        name: 'team-list',
+        component: () => import('@/views/teams/TeamList.vue'),
+      },
+      {
         path: '/quiz',
         name: 'quiz',
         component: () => import('@/views/quiz/Quiz.vue'),

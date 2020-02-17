@@ -79,6 +79,15 @@
                   :items="departments"
                   :rules="rule.departmentId"
                 />
+                <v-select
+                  v-model="member.teamId"
+                  label="所属チーム"
+                  item-text="name"
+                  item-value="id"
+                  outlined
+                  :disabled="initing"
+                  :items="teams"
+                />
                 <v-textarea
                   v-model="member.specialty"
                   counter="100"
@@ -123,12 +132,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { Member, genders } from '@/models/member/Member'
-import { MemberRules } from '@/models/member/MemberRules'
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator'
+import {Member, genders} from '@/models/member/Member'
+import {MemberRules} from '@/models/member/MemberRules'
 import MemberService from '@/models/member/MemberService'
-import { Department } from '@/models/department/Department'
+import {Department} from '@/models/department/Department'
 import DepartmentService from '@/models/department/DepartmentService'
+import {Team} from '@/models/team/Team'
+import TeamService from '@/models/team/TeamService'
 
 @Component({
   components: {
@@ -142,6 +153,7 @@ export default class MemberUpdate extends Vue {
 
   private member: Member = MemberService.newInstance()
   private departments: Array<Department> = []
+  private teams: Array<Team> = []
   private dialog: boolean = false
   private valid: boolean = false
   private initing: boolean = false
@@ -177,6 +189,7 @@ export default class MemberUpdate extends Vue {
 
   async created() {
     this.departments = await DepartmentService.search()
+    this.teams = await TeamService.search()
   }
 
   private async update() {

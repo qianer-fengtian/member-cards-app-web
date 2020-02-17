@@ -41,9 +41,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import {Component, Vue, Prop} from 'vue-property-decorator'
+import {Member} from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
-import { Member } from '@/models/member/Member'
+import DepartmentService from '@/models/department/DepartmentService'
+import TeamService from '@/models/team/TeamService'
 
 @Component({
   components: {
@@ -54,6 +56,8 @@ import { Member } from '@/models/member/Member'
 })
 export default class MemberList extends Vue {
   private members: Array<Member> = []
+  private departmentNameMap: Map<string, string> = new Map()
+  private teamNameMap: Map<string, string> = new Map()
   private dialog: boolean = false
   private loading: boolean  = false
   private keyword: string = ''
@@ -89,6 +93,18 @@ export default class MemberList extends Vue {
         width: 120,
       },
       {
+        text: '所属部署',
+        align: 'center',
+        value: 'departmentName',
+        width: 200,
+      },
+      {
+        text: '所属チーム',
+        align: 'center',
+        value: 'teamName',
+        width: 200,
+      },
+      {
         text: '得意分野',
         value: 'specialty',
         width: 500,
@@ -121,6 +137,12 @@ export default class MemberList extends Vue {
     try {
       this.loading = true
       this.members = await MemberService.search()
+      this.departmentNameMap = await DepartmentService.getNameMap()
+      this.teamNameMap = await TeamService.getNameMap()
+      this.members.forEach(member => {
+        member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
+        member.teamName = this.teamNameMap.get(member.teamId) || ''
+      })
     } catch (err) {
       this.$notify({
         type: 'error',

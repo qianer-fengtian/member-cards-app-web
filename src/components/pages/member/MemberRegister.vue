@@ -77,6 +77,14 @@
                   :items="departments"
                   :rules="rule.departmentId"
                 />
+                <v-select
+                  v-model="member.teamId"
+                  label="所属チーム"
+                  item-text="name"
+                  item-value="id"
+                  outlined
+                  :items="teams"
+                />
                 <v-textarea
                   v-model="member.specialty"
                   counter="100"
@@ -119,12 +127,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Member, genders } from '@/models/member/Member'
-import { MemberRules } from '@/models/member/MemberRules'
+import {Component, Vue, Watch} from 'vue-property-decorator'
+import {Member, genders } from '@/models/member/Member'
+import {MemberRules} from '@/models/member/MemberRules'
 import MemberService from '@/models/member/MemberService'
-import { Department } from '@/models/department/Department'
+import {Department} from '@/models/department/Department'
 import DepartmentService from '@/models/department/DepartmentService'
+import {Team} from '@/models/team/Team'
+import TeamService from '@/models/team/TeamService'
 
 @Component({
   components: {
@@ -135,6 +145,7 @@ import DepartmentService from '@/models/department/DepartmentService'
 export default class MemberRegister extends Vue {
   private member: Member = MemberService.newInstance()
   private departments: Array<Department> = []
+  private teams: Array<Team> = []
   private dialog: boolean = false
   private loading: boolean = false
   private valid: boolean = false
@@ -158,6 +169,7 @@ export default class MemberRegister extends Vue {
 
   async created() {
     this.departments = await DepartmentService.search()
+    this.teams = await TeamService.search()
   }
 
   private async register() {

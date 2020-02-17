@@ -23,6 +23,11 @@ export default {
     return Department.getInstance(res.data)
   },
 
+  async getNameMap(): Promise<Map<string, string>> {
+    const departments = await this.search() 
+    return new Map(departments.map(department => [department.id, department.name]))
+  },
+
   async register(department: Department) {
     await axios.post(`/departments`, department)
   },

@@ -101,6 +101,12 @@ export default class App extends Vue {
         text: '部署を編集する',
         hidden: !this.isAdmin,
       },
+      {
+        name: 'team-list',
+        icon: 'mdi-account-group',
+        text: 'チームを編集する',
+        hidden: !this.isAdmin,
+      },
     ];
   }
 }

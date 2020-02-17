@@ -23,6 +23,7 @@ export type MemberResponse = {
   specialty: string
   selfAppeal: string
   departmentId: string
+  teamId: string
   avatar: string
   deleted: boolean
   registeredDate: number
@@ -38,6 +39,9 @@ export class Member {
   specialty: string
   selfAppeal: string
   departmentId: string
+  departmentName: string
+  teamId: string
+  teamName: string
   avatar: string
   deleted: boolean
   registeredDate: number
@@ -55,6 +59,7 @@ export class Member {
     member.specialty = res.specialty
     member.selfAppeal = res.selfAppeal
     member.departmentId = res.departmentId
+    member.teamId = res.teamId
     member.avatar = res.avatar
     member.deleted = res.deleted
     member.registeredDate = res.registeredDate

@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import DepartmentService from '@/models/department/DepartmentService'
-import MemberService from '@/models/member/MemberService'
+import {Component, Vue, Prop} from 'vue-property-decorator'
 import {Member} from '@/models/member/Member'
+import MemberService from '@/models/member/MemberService'
+import DepartmentService from '@/models/department/DepartmentService'
+import TeamService from '@/models/team/TeamService'
 
 @Component({
   components: {
@@ -32,6 +33,8 @@ import {Member} from '@/models/member/Member'
 export default class MemberList extends Vue {
   private loading: boolean = false
   private members: Array<Member> = []
+  private departmentNameMap: Map<string, string> = new Map()
+  private teamNameMap: Map<string, string> = new Map()
 
   async created() {
     this.members = Array(20).join(',').split(',').map(() => this.getDummyMember())
@@ -39,12 +42,17 @@ export default class MemberList extends Vue {
     try {
       this.loading = true
       this.members = await MemberService.search()
+      this.departmentNameMap = await DepartmentService.getNameMap()
+      this.teamNameMap = await TeamService.getNameMap()
+      this.members.forEach(member => {
+        member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
+        member.teamName = this.teamNameMap.get(member.teamId) || ''
+      })
     } catch (err) {
       this.$notify({
         type: 'error',
         text: 'メンバーカードの取得に失敗しました',
-      });      
-      this.members = []
+      });
     } finally {
       this.loading = false
     }

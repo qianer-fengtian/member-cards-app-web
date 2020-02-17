@@ -14,6 +14,7 @@ export default {
       specialty: '',
       selfAppeal: '',
       departmentId: '',
+      teamId: '',
       deleted: false,
       registeredDate: 0,
       modifiedDate: 0,
@@ -33,6 +34,11 @@ export default {
   async statistics(): Promise<MemberStatistics> {
     const res = await axios.get("/members/statistics")
     return res.data
+  },
+
+  async getNameMap(): Promise<Map<string, string>> {
+    const members = await this.search() 
+    return new Map(members.map(member => [member.id, member.name]))
   },
 
   async register(member: Member) {

@@ -11,6 +11,9 @@
           <v-list-item-title class="headline">
             {{ member.name }}
           </v-list-item-title>
+          <v-list-item-subtitle>
+            {{ member.departmentName }}
+          </v-list-item-subtitle>
         </v-list-item-content>
         <Avatar
           v-model="member.avatar"
@@ -63,7 +66,19 @@
                     label="入社年月日"
                     outlined
                     readonly
-                  />                  
+                  />         
+                  <v-text-field
+                    v-model="member.departmentName"
+                    label="所属部署"
+                    outlined
+                    readonly
+                  />
+                  <v-text-field
+                    v-model="member.teamName"
+                    label="所属チーム"
+                    outlined
+                    readonly
+                  />
                   <v-textarea
                     v-model="member.specialty"
                     label="得意分野"
@@ -97,9 +112,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { Member } from '../../../models/member/Member'
-import MemberService from '../../../models/member/MemberService'
+import {Component, Vue, Prop} from 'vue-property-decorator'
+import {Member} from '@/models/member/Member'
+import MemberService from '@/models/member/MemberService'
 
 @Component({
   components: {

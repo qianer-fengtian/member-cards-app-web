@@ -52,6 +52,8 @@ import { Member } from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
 import { Question } from '@/models/quiz/Question'
 import QuestionService from '@/models/quiz/QuestionService'
+import DepartmentService from '@/models/department/DepartmentService'
+import TeamService from '@/models/team/TeamService'
 
 @Component({
   components: {
@@ -63,6 +65,8 @@ import QuestionService from '@/models/quiz/QuestionService'
 export default class AnswerSheets extends Vue {
   private members: Array<Member> = []
   private questions: Array<Question> = []
+  private departmentNameMap: Map<string, string> = new Map()
+  private teamNameMap: Map<string, string> = new Map()
   private finished = false
   private loading = true
   private currentIndex: number = 0
@@ -78,6 +82,12 @@ export default class AnswerSheets extends Vue {
   }
   async created() {
     this.members = await MemberService.search()
+    this.departmentNameMap = await DepartmentService.getNameMap()
+    this.teamNameMap = await TeamService.getNameMap()
+    this.members.forEach(member => {
+      member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
+      member.teamName = this.teamNameMap.get(member.teamId) || ''
+    })
     this.numOfQuestions = +this.$route.params.numOfQuestions
     this.numOfChoices = +this.$route.params.numOfChoices
     this.start()
