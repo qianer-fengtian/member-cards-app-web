@@ -29,7 +29,10 @@
         sm="6"
       >
         <template v-if="!loading">
-          <NumberOfHiresPerYear :number-of-hires-per-year="statistics.numberOfHiresPerYear" />
+          <NumberOfTurnoverPerYear
+            :number-of-joined-per-year="statistics.numberOfJoinedPerYear"
+            :number-of-left-per-year="statistics.numberOfLeftPerYear"
+          />
         </template>
       </v-col>
     </v-row>
@@ -47,7 +50,7 @@ import {MemberStatistics} from '@/models/member/Member'
     MemberTotal: () => import('@/components/pages/dashboard/MemberTotal.vue'),
     GenderRatio: () => import('@/components/pages/dashboard/GenderRatio.vue'),
     PopulationByAge: () => import('@/components/pages/dashboard/PopulationByAge.vue'),
-    NumberOfHiresPerYear: () => import('@/components/pages/dashboard/NumberOfHiresPerYear.vue'),
+    NumberOfTurnoverPerYear: () => import('@/components/pages/dashboard/NumberOfTurnoverPerYear.vue'),
   },
 })
 export default class Dashboard extends Vue {
@@ -56,7 +59,8 @@ export default class Dashboard extends Vue {
     total: 0,
     maleTotal: 0,
     femaleTotal: 0,
-    numberOfHiresPerYear: {},
+    numberOfJoinedPerYear: {},
+    numberOfLeftPerYear: {},
     populationByAge: {},
   }
 

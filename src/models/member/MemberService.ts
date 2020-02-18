@@ -10,6 +10,7 @@ export default {
       avatar: '',
       birthDate: 0,
       joinedDate: Date.now(),
+      leftDate: null,
       gender: '0',
       specialty: '',
       selfAppeal: '',

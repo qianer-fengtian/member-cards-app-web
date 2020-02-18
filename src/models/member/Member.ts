@@ -10,7 +10,8 @@ export type MemberStatistics = {
   total: number,
   maleTotal: number,
   femaleTotal: number,
-  numberOfHiresPerYear: object,
+  numberOfJoinedPerYear: object,
+  numberOfLeftPerYear: object,
   populationByAge: object,
 }
 
@@ -19,6 +20,7 @@ export type MemberResponse = {
   name: string
   birthDate: number
   joinedDate: number
+  leftDate: number | null
   gender: string
   specialty: string
   selfAppeal: string
@@ -35,6 +37,7 @@ export class Member {
   name: string
   birthDate: number
   joinedDate: number
+  leftDate: number | null
   gender: string
   specialty: string
   selfAppeal: string
@@ -55,6 +58,7 @@ export class Member {
     member.name = res.name
     member.birthDate = res.birthDate
     member.joinedDate = res.joinedDate
+    member.leftDate = res.leftDate
     member.gender = res.gender
     member.specialty = res.specialty
     member.selfAppeal = res.selfAppeal
@@ -85,6 +89,15 @@ export class Member {
 
   set formattedJoinedDate(value) {
     this.joinedDate = utils.convertISODateToUnixMills(value)
+  }
+
+  get formattedLeftDate() {
+    if (!this.leftDate) return ''
+    return utils.convertUnixMillsToISODate(this.leftDate)
+  }
+
+  set formattedLeftDate(value) {
+    this.leftDate = value ? utils.convertISODateToUnixMills(value) : null
   }
 
   get formattedRegisteredDate() {

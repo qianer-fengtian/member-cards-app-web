@@ -68,6 +68,14 @@
                   required
                   :rules="rule.joinedDate"
                 />
+                <DatePicker
+                  v-model="member.formattedLeftDate"
+                  clearable
+                  label="退社年月日"
+                  outlined
+                  required
+                  @click.clear="member.formattedLeftDate = ''"
+                />
                 <v-select
                   v-model="member.departmentId"
                   label="所属部署"

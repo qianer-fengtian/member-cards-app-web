@@ -93,6 +93,12 @@ export default class MemberList extends Vue {
         width: 120,
       },
       {
+        text: '退社年月日',
+        align: 'center',
+        value: 'formattedLeftDate',
+        width: 120,
+      },
+      {
         text: '所属部署',
         align: 'center',
         value: 'departmentName',
