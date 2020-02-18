@@ -20,7 +20,7 @@
         <v-col
           cols="12"
         >
-          <BarChart 
+          <LineChart 
             :chart-data="chartData"
             :chart-options="chartOptions"
           />
@@ -40,7 +40,7 @@ interface PopulationByAgeIF {
 
 @Component({
   components: {
-    BarChart: () => import('@/components/pages/dashboard/BarChart.vue'),
+    LineChart: () => import('@/components/pages/dashboard/LineChart.vue'),
   },
 })
 export default class PopulationByAge extends Vue {
@@ -52,14 +52,12 @@ export default class PopulationByAge extends Vue {
     const minAge = Math.min(...Object.keys(this.populationByAge).map((e) => +e))
     const maxAge = Math.max(...Object.keys(this.populationByAge).map((e) => +e))
     const labels = [...Array(maxAge - minAge + 1)].map((v, i) => i + minAge)
-    const data = [...Array(maxAge - minAge + 1)].map((v, i) => i + minAge).map(v => this.populationByAge[+v])
-
+    const data = [...Array(maxAge - minAge + 1)].map((v, i) => i + minAge).map(v => this.populationByAge[+v] || 0)
     return {
 			labels,
       datasets: [{
-        backgroundColor: '#00A6ED33',
         borderColor: '#00A6ED',
-        borderWidth: 1,
+        fill: false,
         data,
       }]
     };
