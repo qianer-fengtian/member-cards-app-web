@@ -7,7 +7,7 @@
       <template v-if="value">
         <Base64Image :src="value" />
       </template>
-      <span v-else>256KB以下</span>
+      <span v-else>画像</span>
       <v-icon
         aria-hidden="true"
         class="icon"
@@ -48,6 +48,8 @@ export default class AvatarUpload extends Vue {
 
   private fileReader: FileReader = new FileReader()
 
+  private image = new Image()
+
   private get refs(): any {
     return this.$refs
   }
@@ -56,12 +58,18 @@ export default class AvatarUpload extends Vue {
     return this.size / 4 * 3
   }
 
+  private get compressedSize() {
+    return 300
+  }
+
   created() {
     this.fileReader.addEventListener('load', this.setAvatarFile)
+    this.image.addEventListener('load', this.setImage)
   }
 
   beforeDestroy() {
     this.fileReader.removeEventListener('load', this.setAvatarFile)
+    this.image.removeEventListener('load', this.setImage)
   }
 
   private upload() {
@@ -76,9 +84,6 @@ export default class AvatarUpload extends Vue {
 
         if (!/image\/.*/.test(files[0].type)) return
 
-       const fileSize = (files[0].size / 1024)
-        if (fileSize > 256) return
-        
         this.fileReader.readAsDataURL(files[0])
       }
     }
@@ -86,7 +91,31 @@ export default class AvatarUpload extends Vue {
 
   private setAvatarFile() {
     if (typeof this.fileReader.result === 'string') {
-      const result = this.fileReader.result
+      this.image.src = this.fileReader.result
+    }
+  }
+
+  private setImage() {
+    let ratio = 0
+    let width = this.compressedSize
+    let height = this.compressedSize
+
+    if (this.image.width > this.image.height) {
+      ratio = this.image.height / this.image.width
+      height = height * ratio
+    } else {
+      ratio = this.image.width / this.image.height      
+      width = width * ratio
+    }
+
+    const canvasEl = document.createElement('canvas')
+    canvasEl.height = height
+    canvasEl.width = width
+    
+    const ctx = canvasEl.getContext('2d')
+    if (ctx) {
+      ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, width, height)
+      const result = canvasEl.toDataURL('image/jpg')
       const firstIndex = result.indexOf(',') + 1
       this.$emit('input', result.slice(firstIndex))
     }
