@@ -21,7 +21,7 @@
         <v-col
           cols="12"
         >
-          <LineChart 
+          <BarChart 
             :chart-data="chartData"
             :chart-options="chartOptions"
           />
@@ -41,7 +41,7 @@ interface NumberOfTurnoverPerYearIF {
 
 @Component({
   components: {
-    LineChart: () => import('@/components/pages/dashboard/LineChart.vue'),
+    BarChart: () => import('@/components/pages/dashboard/BarChart.vue'),
   },
 })
 export default class NumberOfTurnoverPerYear extends Vue {
@@ -67,14 +67,16 @@ export default class NumberOfTurnoverPerYear extends Vue {
       datasets: [
         {
           label: '入社',
+          backgroundColor: '#C8E6C9',
           borderColor: '#4CAF50',
-          fill: false,
+          borderWidth: 1,
           data: joinedData,
         },
         {
           label: '退社',
+          backgroundColor: '#FFCDD2',
           borderColor: '#F44336',
-          fill: false,
+          borderWidth: 1,
           data: leftData,
         },
       ],
