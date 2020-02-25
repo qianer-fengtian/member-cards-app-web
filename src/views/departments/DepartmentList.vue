@@ -5,13 +5,17 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        hide-default-footer
         sort-by="formattedRegisteredDate"
         sort-desc
         loading-text="検索中..."
         :headers="headers"
         :items="departments"
+        :items-per-page="itemsPerPage"
         :loading="loading"
+        :page.sync="page"
         :search="keyword"
+        @page-count="pageCount = $event"
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -36,6 +40,10 @@
           />
         </template>
       </v-data-table>
+      <v-pagination
+        v-model="page"
+        :length="pageCount"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -57,6 +65,9 @@ export default class DepartmentList extends Vue {
   private dialog: boolean = false
   private loading: boolean  = false
   private keyword: string = ''
+  private page = 1
+  private pageCount = 0
+  private itemsPerPage = 10
   
   get headers(): Array<object> {
     return [
