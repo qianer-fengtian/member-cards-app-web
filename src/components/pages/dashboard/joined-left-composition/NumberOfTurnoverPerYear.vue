@@ -1,34 +1,10 @@
 <template>
-  <v-card
-    class="number_of_turnover_per_year"
-    outlined
-  >
-    <v-card-title class="title">
-      入退社数
-    </v-card-title>
-    <v-card-text>
-      <v-row align="center">
-        <v-col
-          class="text-center"
-          cols="12"
-        >
-          平均入社数
-          <span class="number_of_turnover_per_year__average_joined">
-             {{ averageJoined }}
-          </span>
-          人
-        </v-col>
-        <v-col
-          cols="12"
-        >
-          <BarChart 
-            :chart-data="chartData"
-            :chart-options="chartOptions"
-          />
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <BarChart 
+    chart-id="number-of-turnover-per-year"
+    :height="200"
+    :chart-data="chartData"
+    :chart-options="chartOptions"
+  />
 </template>
 
 <script lang="ts">
@@ -42,6 +18,7 @@ interface NumberOfTurnoverPerYearIF {
 @Component({
   components: {
     BarChart: () => import('@/components/pages/dashboard/BarChart.vue'),
+    DashboardCard: () => import('@/components/pages/dashboard/DashboardCard.vue'),
   },
 })
 export default class NumberOfTurnoverPerYear extends Vue {
@@ -99,23 +76,8 @@ export default class NumberOfTurnoverPerYear extends Vue {
       }
     }    
   }
-
-  private get averageJoined() {
-    if (Object.keys(this.numberOfJoinedPerYear).length === 0) return 0
-    const minYear = Math.min(...Object.keys(this.numberOfJoinedPerYear).map((e) => +e))
-    const maxYear = utils.now().year()
-    const averageJoined = Object.values(this.numberOfJoinedPerYear).map(e => +e).reduce((a, b) => a + b, 0) / (maxYear - minYear)
-    return Math.floor(averageJoined)
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-.number_of_turnover_per_year {
-  &__average_joined {
-    color: $secondary;
-    font-weight: bold;
-    font-size: 1.4rem;
-  }
-}
 </style>
