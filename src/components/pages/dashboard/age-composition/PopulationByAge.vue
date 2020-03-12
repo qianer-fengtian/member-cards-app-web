@@ -1,38 +1,14 @@
 <template>
-  <v-card
-    class="population-by-age"
-    outlined
-  >
-    <v-card-title class="title">
-      年齢比
-    </v-card-title>
-    <v-card-text>
-      <v-row align="center">
-        <v-col
-          class="text-center"
-          cols="12"
-        >
-          <span class="population-by-age__average-age">
-            {{ averageAge }}
-          </span>
-          歳
-        </v-col>
-        <v-col
-          cols="12"
-        >
-          <BarChart 
-            :chart-data="chartData"
-            :chart-options="chartOptions"
-          />
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <BarChart 
+    chart-id="population-by-age"
+    :height="200"
+    :chart-data="chartData"
+    :chart-options="chartOptions"
+  />
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
 
 interface PopulationByAgeIF {
   [key: number]: number
@@ -83,21 +59,8 @@ export default class PopulationByAge extends Vue {
       }
     }    
   }
-
-  private get averageAge() {
-    if (Object.keys(this.populationByAge).length === 0) return 0
-    const averageAge = Object.keys(this.populationByAge).map(e => +e).reduce((a, b) => a + b, 0) / Object.keys(this.populationByAge).length
-    return Math.round(averageAge)
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-.population-by-age {
-  &__average-age {
-    color: $secondary;
-    font-weight: bold;
-    font-size: 1.4rem;
-  }
-}
 </style>

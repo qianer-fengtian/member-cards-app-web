@@ -6,6 +6,12 @@ export const genders = [
   { id: '2', name: '女性' },
 ]
 
+export const joiningForms = [
+  { id: '0', name: '新卒採用' },
+  { id: '1', name: '中途採用' },
+  { id: '9', name: 'その他' },
+]
+
 export type MemberStatistics = {  
   total: number,
   maleTotal: number,
@@ -13,6 +19,12 @@ export type MemberStatistics = {
   numberOfJoinedPerYear: object,
   numberOfLeftPerYear: object,
   populationByAge: object,
+}
+
+export type MemberJoining = {
+  id: string,
+  memberId: string,
+  joiningForm: string,
 }
 
 export type MemberResponse = {
@@ -30,6 +42,7 @@ export type MemberResponse = {
   deleted: boolean
   registeredDate: number
   modifiedDate: number
+  memberJoining: MemberJoining
 }
 
 export class Member {
@@ -49,6 +62,7 @@ export class Member {
   deleted: boolean
   registeredDate: number
   modifiedDate: number
+  memberJoining: MemberJoining
 
   private constructor() {}
 
@@ -68,6 +82,7 @@ export class Member {
     member.deleted = res.deleted
     member.registeredDate = res.registeredDate
     member.modifiedDate = res.modifiedDate
+    member.memberJoining = res.memberJoining
     return member
   }
 

@@ -1,35 +1,21 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <MemberTotal :total="statistics.total" />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="8"
-      >
-        <GenderRatio
+      <v-col cols="12">
+        <MemberComposition
+          :total="statistics.total"
           :male-total="statistics.maleTotal"
           :female-total="statistics.femaleTotal"
         />
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-      >
+      <v-col cols="12">
         <template v-if="!loading">
-          <PopulationByAge :population-by-age="statistics.populationByAge" />
+          <AgeComposition :population-by-age="statistics.populationByAge" />
         </template>
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-      >
+      <v-col cols="12">
         <template v-if="!loading">
-          <NumberOfTurnoverPerYear
+          <JoinedLeftComposition
             :number-of-joined-per-year="statistics.numberOfJoinedPerYear"
             :number-of-left-per-year="statistics.numberOfLeftPerYear"
           />
@@ -47,10 +33,9 @@ import {MemberStatistics} from '@/models/member/Member'
 
 @Component({
   components: {
-    MemberTotal: () => import('@/components/pages/dashboard/MemberTotal.vue'),
-    GenderRatio: () => import('@/components/pages/dashboard/GenderRatio.vue'),
-    PopulationByAge: () => import('@/components/pages/dashboard/PopulationByAge.vue'),
-    NumberOfTurnoverPerYear: () => import('@/components/pages/dashboard/NumberOfTurnoverPerYear.vue'),
+    MemberComposition: () => import('@/components/pages/dashboard/member-composition/MemberComposition.vue'),
+    AgeComposition: () => import('@/components/pages/dashboard/age-composition/AgeComposition.vue'),
+    JoinedLeftComposition: () => import('@/components/pages/dashboard/joined-left-composition/JoinedLeftComposition.vue'),  
   },
 })
 export default class Dashboard extends Vue {
@@ -79,3 +64,6 @@ export default class Dashboard extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+</style>
