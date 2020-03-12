@@ -17,5 +17,8 @@ export const MemberRules = () => ({
   ],
   selfAppeal: [
     (v: string) => v.length <= 1000 || '自己アピールは1000文字以下である必要があります',
-  ]
+  ],
+  joiningForm: [
+    (v: string) => !!v || '入社区分は必須です',
+  ],
 })

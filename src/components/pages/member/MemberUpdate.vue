@@ -77,6 +77,16 @@
                   @click.clear="member.formattedLeftDate = ''"
                 />
                 <v-select
+                  v-model="member.memberJoining.joiningForm"
+                  label="入社区分"
+                  item-text="name"
+                  item-value="id"
+                  outlined
+                  required
+                  :items="joiningForms"
+                  :rules="rule.joiningForm"
+                />
+                <v-select
                   v-model="member.departmentId"
                   label="所属部署"
                   item-text="name"
@@ -141,7 +151,7 @@
 
 <script lang="ts">
 import {Component, Vue, Prop, Watch} from 'vue-property-decorator'
-import {Member, genders} from '@/models/member/Member'
+import {Member, genders, joiningForms} from '@/models/member/Member'
 import {MemberRules} from '@/models/member/MemberRules'
 import MemberService from '@/models/member/MemberService'
 import {Department} from '@/models/department/Department'
@@ -177,6 +187,10 @@ export default class MemberUpdate extends Vue {
 
   private get genders() {
     return genders
+  }
+  
+  private get joiningForms() {
+    return joiningForms
   }
 
   @Watch('dialog')

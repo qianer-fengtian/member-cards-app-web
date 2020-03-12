@@ -19,6 +19,11 @@ export default {
       deleted: false,
       registeredDate: 0,
       modifiedDate: 0,
+      memberJoining: {
+        id: uuidv4(),
+        memberId: uuidv4(),
+        joiningForm: '0',
+      },
     })
   },
 
