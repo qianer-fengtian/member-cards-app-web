@@ -41,13 +41,36 @@
         </DashboardCard>
       </v-col>
       <v-col
-        cols="12"
-        md="6"
+        cols="4"
+        md="2"
       >
+        <DashboardCard
+          title="新卒入社数"
+          height="120"
+        >
+          <div class="new-graduates-total">
+            {{ newGraduates }}
+          </div>
+        </DashboardCard>            
+      </v-col>
+      <v-col
+        cols="4"
+        md="2"
+      >
+        <DashboardCard
+          title="中途入社数"
+          height="120"
+        >
+          <div class="mid-careers-total">
+            {{ newGraduates }}
+          </div>
+        </DashboardCard>            
+      </v-col>
+      <v-col cols="12">
         <DashboardCard title="年度別人数">
           <NumberOfTurnoverPerYear
-            :number-of-joined-per-year="numberOfJoinedPerYear"
-            :number-of-left-per-year="numberOfLeftPerYear"
+            :numbers-of-employments="numbersOfEmployments"
+            :numbers-of-retirements="numbersOfRetirements"
           />
         </DashboardCard>
       </v-col>
@@ -57,6 +80,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Statistics'
 
 @Component({
   components: {
@@ -65,18 +89,24 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
   },
 })
 export default class JoinedLeftComposition extends Vue {
-  @Prop({ type: Object, default: {}})
-  private numberOfJoinedPerYear: object
+  @Prop({ type: Number, default: 0 })
+  private newGraduates: number
 
-  @Prop({ type: Object, default: {}})
-  private numberOfLeftPerYear: object
+  @Prop({ type: Number, default: 0 })
+  private midCareers: number
+
+  @Prop({ type: Array, default: [] })
+  private numbersOfEmployments: Array<NumberOfEmployment>
+
+  @Prop({ type: Array, default: [] })
+  private numbersOfRetirements: Array<NumberOfRetirement>
 
   private get joinedTotal() {
-    return Object.values(this.numberOfJoinedPerYear).reduce((a, b) => a + b, 0)
+    return this.numbersOfEmployments.map(e => e.total).reduce((a, b) => a + b, 0)
   }
 
   private get leftTotal() {
-    return Object.values(this.numberOfLeftPerYear).reduce((a, b) => a + b, 0)
+    return this.numbersOfRetirements.map(e => e.total).reduce((a, b) => a + b, 0)
   }
 }
 </script>
@@ -84,7 +114,9 @@ export default class JoinedLeftComposition extends Vue {
 <style lang="scss" scoped>
 .joined-total,
 .left-total,
-.retention-rate {
+.retention-rate,
+.new-graduates-total,
+.mid-careers-total {
   margin: auto;
   font-size: 2rem;
   font-weight: bold;
@@ -102,5 +134,13 @@ export default class JoinedLeftComposition extends Vue {
 
 .retention-rate {
   color: $accent;
+}
+
+.new-graduates-total {
+  color: #AEEA00;
+}
+
+.mid-careers-total {
+  color: #9C27B0;
 }
 </style>

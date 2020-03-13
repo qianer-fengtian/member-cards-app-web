@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import {Component, Vue, Prop} from 'vue-property-decorator'
-import {Member} from '@/models/member/Member'
+import {Member, joiningForms } from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
 import DepartmentService from '@/models/department/DepartmentService'
 import TeamService from '@/models/team/TeamService'
@@ -111,13 +111,13 @@ export default class MemberList extends Vue {
       },
       {
         text: '所属部署',
-        align: 'center',
+        align: 'left',
         value: 'departmentName',
         width: 200,
       },
       {
         text: '所属チーム',
-        align: 'center',
+        align: 'left',
         value: 'teamName',
         width: 200,
       },
@@ -142,12 +142,6 @@ export default class MemberList extends Vue {
     try {
       this.loading = true
       this.members = await MemberService.search()
-      this.departmentNameMap = await DepartmentService.getNameMap()
-      this.teamNameMap = await TeamService.getNameMap()
-      this.members.forEach(member => {
-        member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
-        member.teamName = this.teamNameMap.get(member.teamId) || ''
-      })
     } catch (err) {
       this.$notify({
         type: 'error',

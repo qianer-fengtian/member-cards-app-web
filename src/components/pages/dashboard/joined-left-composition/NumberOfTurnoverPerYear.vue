@@ -10,10 +10,7 @@
 <script lang="ts">
 import * as utils from '@/utils'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
-interface NumberOfTurnoverPerYearIF {
-  [key: number]: number
-}
+import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Statistics'
 
 @Component({
   components: {
@@ -22,22 +19,25 @@ interface NumberOfTurnoverPerYearIF {
   },
 })
 export default class NumberOfTurnoverPerYear extends Vue {
-  @Prop({type: Object, default: {}})
-  private numberOfJoinedPerYear: NumberOfTurnoverPerYearIF
+  @Prop({ type: Array, default: [] })
+  private numbersOfEmployments: Array<NumberOfEmployment>
 
-  @Prop({type: Object, default: {}})
-  private numberOfLeftPerYear: NumberOfTurnoverPerYearIF
+  @Prop({ type: Array, default: [] })
+  private numbersOfRetirements: Array<NumberOfRetirement>
 
   private get chartData() {
-    const joinedKeys = Object.keys(this.numberOfJoinedPerYear)
-    const leftKeys = Object.keys(this.numberOfLeftPerYear)
+    const joinedMap = new Map(this.numbersOfEmployments.map(e => [e.year, e.total]))
+    const leftMap = new Map(this.numbersOfRetirements.map(e => [e.year, e.total]))
+
+    const joinedKeys = this.numbersOfEmployments.map(e => e.year)
+    const leftKeys = this.numbersOfRetirements.map(e => e.year)
     const maxYear = utils.now().year()
     const minJoinedYear = joinedKeys.length > 0 ? Math.min(...joinedKeys.map((e) => +e)) : maxYear;
     const minLeftYear = leftKeys.length > 0 ? Math.min(...leftKeys.map((e) => +e)) : maxYear;
     const minYear = Math.min(minJoinedYear, minLeftYear)
     const labels = [...Array(maxYear - minYear + 1)].map((v, i) => i + minYear)
-    const joinedData = [...Array(maxYear - minYear + 1)].map((v, i) => i + minYear).map(v => this.numberOfJoinedPerYear[+v] || 0)
-    const leftData = [...Array(maxYear - minYear + 1)].map((v, i) => i + minYear).map(v => this.numberOfLeftPerYear[+v] || 0)
+    const joinedData = [...Array(maxYear - minYear + 1)].map((v, i) => i + minYear).map(v => joinedMap.get(+v) || 0)
+    const leftData = [...Array(maxYear - minYear + 1)].map((v, i) => i + minYear).map(v => leftMap.get(+v) || 0)
 
     return {
 			labels,

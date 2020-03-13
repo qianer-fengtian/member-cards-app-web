@@ -68,7 +68,7 @@
                   :rules="rule.joinedDate"
                 />
                 <v-select
-                  v-model="member.memberJoining.joiningForm"
+                  v-model="member.joiningForm"
                   label="入社区分"
                   item-text="name"
                   item-value="id"

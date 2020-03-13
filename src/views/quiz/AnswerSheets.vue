@@ -82,12 +82,6 @@ export default class AnswerSheets extends Vue {
   }
   async created() {
     this.members = await MemberService.search()
-    this.departmentNameMap = await DepartmentService.getNameMap()
-    this.teamNameMap = await TeamService.getNameMap()
-    this.members.forEach(member => {
-      member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
-      member.teamName = this.teamNameMap.get(member.teamId) || ''
-    })
     this.numOfQuestions = +this.$route.params.numOfQuestions
     this.numOfChoices = +this.$route.params.numOfChoices
     this.start()

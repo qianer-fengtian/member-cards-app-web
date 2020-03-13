@@ -24,11 +24,6 @@ export default {
     return Team.getInstance(res.data)
   },
 
-  async getNameMap(): Promise<Map<string, string>> {
-    const teams = await this.search() 
-    return new Map(teams.map(team => [team.id, team.name]))
-  },
-
   async register(team: Team) {
     await axios.post(`/teams`, team)
   },

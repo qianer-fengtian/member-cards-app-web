@@ -15,15 +15,14 @@ export default {
       specialty: '',
       selfAppeal: '',
       departmentId: '',
+      departmentName: '',
       teamId: '',
+      teamName: '',
+      joiningId: uuidv4(),
+      joiningForm: '0',
       deleted: false,
       registeredDate: 0,
       modifiedDate: 0,
-      memberJoining: {
-        id: uuidv4(),
-        memberId: uuidv4(),
-        joiningForm: '0',
-      },
     })
   },
 
@@ -35,11 +34,6 @@ export default {
   async select(id: String): Promise<Member> {
     const res = await axios.get(`/members/${id}`)
     return Member.getInstance(res.data)
-  },
-
-  async statistics(): Promise<MemberStatistics> {
-    const res = await axios.get("/members/statistics")
-    return res.data
   },
 
   async getNameMap(): Promise<Map<string, string>> {

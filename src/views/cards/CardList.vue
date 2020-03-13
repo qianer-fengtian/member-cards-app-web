@@ -38,6 +38,7 @@ import {Department} from '@/models/department/Department'
 import DepartmentService from '@/models/department/DepartmentService'
 import {Team} from '@/models/team/Team'
 import TeamService from '@/models/team/TeamService'
+import StatisticsService from '@/models/statistics/StatisticsService'
 
 @Component({
   components: {
@@ -70,18 +71,12 @@ export default class MemberList extends Vue {
     try {
       this.loading = true
 
-      const { total } = await MemberService.statistics()      
-      this.members = Array(total).join(',').split(',').map(() => this.getDummyMember())
+      const { memberStastics } = await StatisticsService.getAll()      
+      this.members = Array(memberStastics.total).join(',').split(',').map(() => this.getDummyMember())
 
       this.members = await MemberService.search()
       this.departments = await DepartmentService.search()
       this.teams = await TeamService.search()
-      this.departmentNameMap = await DepartmentService.getNameMap()
-      this.teamNameMap = await TeamService.getNameMap()
-      this.members.forEach(member => {
-        member.departmentName = this.departmentNameMap.get(member.departmentId) || ''
-        member.teamName = this.teamNameMap.get(member.teamId) || ''
-      })
     } catch (err) {
       this.$notify({
         type: 'error',

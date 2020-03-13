@@ -26,5 +26,8 @@ export default class DashboardCard extends Vue {
 .title {
   padding: 0.5rem 1rem;
   font-size: 1.1rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
