@@ -1,86 +1,78 @@
 <template>
-  <DashboardCard>
-    <v-row>
-      <v-col
-        cols="4"
-        md="2"
+  <v-row>
+    <v-col
+      cols="12"
+      md="4"
+    >
+      <DashboardCard
+        icon="account-group"
+        title="総入社数"
       >
-        <DashboardCard
-          title="総入社数"
-          height="120"
-        >
-          <div class="joined-total">
-            {{ joinedTotal }}
-          </div>
-        </DashboardCard>
-      </v-col>
-      <v-col
-        cols="4"
-        md="2"
+        <div class="total joined-total">
+          {{ statistics.joinedTotal }}
+        </div>
+      </DashboardCard>
+    </v-col>
+    <v-col
+      cols="6"
+      md="4"
+    >
+      <DashboardCard
+        icon="leaf"
+        title="新卒入社数"
       >
-        <DashboardCard
-          title="総退社数"
-          height="120"
-        >
-          <div class="left-total">
-            {{ leftTotal }}
-          </div>
-        </DashboardCard>
-      </v-col>
-      <v-col
-        cols="4"
-        md="2"
+        <div class="total new-graduates-total">
+          {{ statistics.newGraduates }}
+        </div>
+      </DashboardCard>            
+    </v-col>
+    <v-col
+      cols="6"
+      md="4"
+    >
+      <DashboardCard
+        icon="leaf-maple"
+        title="中途入社数"
       >
-        <DashboardCard
-          title="定着率"
-          height="120"
-        >
-          <div class="retention-rate">
-            %
-          </div>
-        </DashboardCard>
-      </v-col>
-      <v-col
-        cols="4"
-        md="2"
+        <div class="total mid-careers-total">
+          {{ statistics.midCareers }}
+        </div>
+      </DashboardCard>            
+    </v-col>
+    <v-col
+      cols="12"
+      md="4"
+    >
+      <DashboardCard
+        icon="account-convert"
+        title="直近3年の入退社数"
       >
-        <DashboardCard
-          title="新卒入社数"
-          height="120"
-        >
-          <div class="new-graduates-total">
-            {{ newGraduates }}
+        <v-row>
+          <div class="total last-years-joined-total">
+            {{ statistics.lastThreeYearsJoinedTotal }}
+            <span class="caption">(入社)</span>
           </div>
-        </DashboardCard>            
-      </v-col>
-      <v-col
-        cols="4"
-        md="2"
-      >
-        <DashboardCard
-          title="中途入社数"
-          height="120"
-        >
-          <div class="mid-careers-total">
-            {{ newGraduates }}
+          <div class="total last-years-left-total">
+            {{ statistics.lastThreeYearsLeftTotal }}
+            <span class="caption">(退社)</span>
           </div>
-        </DashboardCard>            
-      </v-col>
-      <v-col cols="12">
-        <DashboardCard title="年度別人数">
-          <NumberOfTurnoverPerYear
-            :numbers-of-employments="numbersOfEmployments"
-            :numbers-of-retirements="numbersOfRetirements"
-          />
-        </DashboardCard>
-      </v-col>
-    </v-row>
-  </DashboardCard>
+        </v-row>
+      </DashboardCard>
+    </v-col>
+    <v-col
+      cols="12"
+      md="8"
+    >
+      <DashboardCard title="年度別人数">
+        <NumberOfTurnoverPerYear :statistics="statistics" />
+      </DashboardCard>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Statistics'
+import { Statistics } from '@/models/statistics/Statistics'
 
 @Component({
   components: {
@@ -89,34 +81,13 @@ import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Stat
   },
 })
 export default class JoinedLeftComposition extends Vue {
-  @Prop({ type: Number, default: 0 })
-  private newGraduates: number
-
-  @Prop({ type: Number, default: 0 })
-  private midCareers: number
-
-  @Prop({ type: Array, default: [] })
-  private numbersOfEmployments: Array<NumberOfEmployment>
-
-  @Prop({ type: Array, default: [] })
-  private numbersOfRetirements: Array<NumberOfRetirement>
-
-  private get joinedTotal() {
-    return this.numbersOfEmployments.map(e => e.total).reduce((a, b) => a + b, 0)
-  }
-
-  private get leftTotal() {
-    return this.numbersOfRetirements.map(e => e.total).reduce((a, b) => a + b, 0)
-  }
+  @Prop({ type: Object, required: true })
+  private statistics: Statistics
 }
 </script>
 
 <style lang="scss" scoped>
-.joined-total,
-.left-total,
-.retention-rate,
-.new-graduates-total,
-.mid-careers-total {
+.total {
   margin: auto;
   font-size: 2rem;
   font-weight: bold;
@@ -128,14 +99,6 @@ export default class JoinedLeftComposition extends Vue {
   color: $success;
 }
 
-.left-total {
-  color: $error;
-}
-
-.retention-rate {
-  color: $accent;
-}
-
 .new-graduates-total {
   color: #AEEA00;
 }
@@ -143,4 +106,13 @@ export default class JoinedLeftComposition extends Vue {
 .mid-careers-total {
   color: #9C27B0;
 }
+
+.last-years-joined-total {
+  color: $success;
+}
+
+.last-years-left-total {
+  color: $error;
+}
+
 </style>

@@ -10,7 +10,7 @@
 <script lang="ts">
 import * as utils from '@/utils'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Statistics'
+import { Statistics } from '@/models/statistics/Statistics'
 
 @Component({
   components: {
@@ -19,18 +19,15 @@ import { NumberOfEmployment, NumberOfRetirement } from '@/models/statistics/Stat
   },
 })
 export default class NumberOfTurnoverPerYear extends Vue {
-  @Prop({ type: Array, default: [] })
-  private numbersOfEmployments: Array<NumberOfEmployment>
-
-  @Prop({ type: Array, default: [] })
-  private numbersOfRetirements: Array<NumberOfRetirement>
+  @Prop({ type: Object, required: true })
+  private statistics: Statistics
 
   private get chartData() {
-    const joinedMap = new Map(this.numbersOfEmployments.map(e => [e.year, e.total]))
-    const leftMap = new Map(this.numbersOfRetirements.map(e => [e.year, e.total]))
+    const joinedMap = new Map(this.statistics.numbersOfEmployments.map(e => [e.year, e.total]))
+    const leftMap = new Map(this.statistics.numbersOfRetirements.map(e => [e.year, e.total]))
 
-    const joinedKeys = this.numbersOfEmployments.map(e => e.year)
-    const leftKeys = this.numbersOfRetirements.map(e => e.year)
+    const joinedKeys = this.statistics.numbersOfEmployments.map(e => e.year)
+    const leftKeys = this.statistics.numbersOfRetirements.map(e => e.year)
     const maxYear = utils.now().year()
     const minJoinedYear = joinedKeys.length > 0 ? Math.min(...joinedKeys.map((e) => +e)) : maxYear;
     const minLeftYear = leftKeys.length > 0 ? Math.min(...leftKeys.map((e) => +e)) : maxYear;
