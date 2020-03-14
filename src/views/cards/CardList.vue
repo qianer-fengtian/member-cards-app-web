@@ -1,48 +1,77 @@
 <template>
   <v-container fluid>
-    <v-btn-toggle v-model="viewMode">
-      <v-btn :value="0">すべて</v-btn>
-      <v-btn :value="1">部署別</v-btn>
-      <v-btn :value="2">チーム別</v-btn>
-    </v-btn-toggle>
+    <v-row justify="end">
+      <v-btn-toggle
+        v-model="viewMode"
+        color="primary"
+        tile
+        group
+      >
+        <v-btn :value="0">すべて</v-btn>
+        <v-btn :value="1">部署別</v-btn>
+        <v-btn :value="2">チーム別</v-btn>
+      </v-btn-toggle>
+    </v-row>
     <v-row>
-      <template v-for="[name, members] in cards">
-        <v-col :key="name" cols="12">
-          <span class="headline">
-            {{ name }}
-          </span>
-        </v-col>
-        <template v-for="member in members">
-          <v-col
-            :key="member.id"
-            sm="6"
-            md="4"
-            lg="3"
+      <v-card class="card-list-wrapper" outlined>
+        <v-card class="card-list" outlined>
+          <v-tabs
+            v-model="tab"
+            color="secondary"
+            slider-size="0"
+            vertical
           >
-            <MemberListItem
-              :member="member"
-              :loading="loading"
-            />
-          </v-col> 
-        </template>
-      </template>
+            <v-tab
+              v-for="([name], index) in cards"
+              :key="index"
+            >
+              {{ name }}
+            </v-tab>
+            <v-tab-item
+              v-for="([name, members], index) in cards"
+              :key="index"
+            >
+              <v-container
+                id="scroll-target"
+                class="tab-container overflow-y-auto"
+              >
+                <v-row>
+                  <template v-for="member in members">
+                    <v-col
+                      :key="member.id"
+                      sm="6"
+                      lg="4"
+                    >
+                      <MemberListItem
+                        :member="member"
+                        :loading="loading"
+                      />
+                    </v-col> 
+                  </template>          
+                </v-row>
+              </v-container>
+            </v-tab-item>
+          </v-tabs>
+        </v-card>
+      </v-card>
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator'
-import {Member} from '@/models/member/Member'
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator'
+import { Member } from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
-import {Department} from '@/models/department/Department'
+import { Department } from '@/models/department/Department'
 import DepartmentService from '@/models/department/DepartmentService'
-import {Team} from '@/models/team/Team'
+import { Team } from '@/models/team/Team'
 import TeamService from '@/models/team/TeamService'
 import StatisticsService from '@/models/statistics/StatisticsService'
 
 @Component({
   components: {
     MemberListItem: () => import('@/components/pages/member/MemberListItem.vue'),
+    DashboardCard: () => import('@/components/pages/dashboard/DashboardCard.vue'),
   },
 })
 export default class MemberList extends Vue {
@@ -50,9 +79,8 @@ export default class MemberList extends Vue {
   private members: Array<Member> = []
   private departments: Array<Department> = []
   private teams: Array<Team> = []
-  private departmentNameMap: Map<string, string> = new Map()
-  private teamNameMap: Map<string, string> = new Map()
   private viewMode: number = 0
+  private tab = 0
 
   private get cards() {
     const cards = [
@@ -92,5 +120,27 @@ export default class MemberList extends Vue {
     member.name = '-'
     return member
   }
+
+  @Watch('viewMode')
+  onViewModeChanged() {
+    this.tab = 0
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.card-list-wrapper,
+.card-list {
+  margin: auto;
+  width: 90vw;
+}
+
+.card-list-wrapper {
+  background: linear-gradient(135deg, rgba(0,166,237,1) 0%, rgba(136,73,194,1) 63%, rgba(246,81,29,1) 100%);
+  padding: 1px;
+}
+
+.tab-container {
+  max-height: 80vh;
+}
+</style>
