@@ -66,7 +66,16 @@
                     label="入社年月日"
                     outlined
                     readonly
-                  />         
+                  />
+                  <v-select
+                    v-model="member.joiningForm"
+                    label="入社区分"
+                    item-text="name"
+                    item-value="id"
+                    outlined
+                    readonly
+                    :items="joiningForms"
+                  />
                   <v-text-field
                     v-model="member.departmentName"
                     label="所属部署"
@@ -113,7 +122,7 @@
 
 <script lang="ts">
 import {Component, Vue, Prop} from 'vue-property-decorator'
-import {Member} from '@/models/member/Member'
+import {Member, joiningForms } from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
 
 @Component({
@@ -129,6 +138,10 @@ export default class MemberListItem extends Vue {
   private loading: boolean
 
   private dialog: boolean = false
+
+  private get joiningForms() {
+    return joiningForms
+  }
 
   private show() {
     this.dialog = true

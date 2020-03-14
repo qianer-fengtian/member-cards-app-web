@@ -100,7 +100,7 @@ export default class MemberComposition extends Vue {
 
   private get maleRatio() {
     if (this.total <= 0) return 0
-    return (this.maleTotal / this.total) * 100
+    return (this.maleTotal / (this.maleTotal + this.femaleTotal)) * 100
   }
 }
 </script>

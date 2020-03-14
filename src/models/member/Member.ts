@@ -21,12 +21,6 @@ export type MemberStatistics = {
   populationByAge: object,
 }
 
-export type MemberJoining = {
-  id: string,
-  memberId: string,
-  joiningForm: string,
-}
-
 export type MemberResponse = {
   id: string
   name: string
@@ -37,12 +31,15 @@ export type MemberResponse = {
   specialty: string
   selfAppeal: string
   departmentId: string
+  departmentName: string
   teamId: string
+  teamName: string
+  joiningId: string
+  joiningForm: string
   avatar: string
   deleted: boolean
   registeredDate: number
   modifiedDate: number
-  memberJoining: MemberJoining
 }
 
 export class Member {
@@ -58,11 +55,12 @@ export class Member {
   departmentName: string
   teamId: string
   teamName: string
+  joiningId: string
+  joiningForm: string
   avatar: string
   deleted: boolean
   registeredDate: number
   modifiedDate: number
-  memberJoining: MemberJoining
 
   private constructor() {}
 
@@ -77,12 +75,15 @@ export class Member {
     member.specialty = res.specialty
     member.selfAppeal = res.selfAppeal
     member.departmentId = res.departmentId
+    member.departmentName = res.departmentName
     member.teamId = res.teamId
+    member.teamName = res.teamName
+    member.joiningId = res.joiningId
+    member.joiningForm = res.joiningForm
     member.avatar = res.avatar
     member.deleted = res.deleted
     member.registeredDate = res.registeredDate
     member.modifiedDate = res.modifiedDate
-    member.memberJoining = res.memberJoining
     return member
   }
 
