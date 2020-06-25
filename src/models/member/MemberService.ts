@@ -31,6 +31,16 @@ export default {
     return res.data.map((e: MemberResponse) => Member.getInstance(e))
   },
 
+  async getEmployees(): Promise<Array<Member>> {
+    const res = await axios.get("/members/employees")
+    return res.data.map((e: MemberResponse) => Member.getInstance(e))
+  },
+
+  async getRetirees(): Promise<Array<Member>> {
+    const res = await axios.get("/members/retirees")
+    return res.data.map((e: MemberResponse) => Member.getInstance(e))
+  },
+
   async select(id: String): Promise<Member> {
     const res = await axios.get(`/members/${id}`)
     return Member.getInstance(res.data)

@@ -138,14 +138,12 @@ export class Statistics {
   }
 
   get lastThreeYearsJoinedTotal(): number {
-    return this.numbersOfEmployments.slice(this.lastYears).map(e => e.total).reduce((a, b) => a + b, 0)    
+    const lastYears = Math.max(0, this.numbersOfEmployments.length-2)
+    return this.numbersOfEmployments.slice(lastYears).map(e => e.total).reduce((a, b) => a + b, 0)    
   }
 
   get lastThreeYearsLeftTotal(): number {
-    return this.numbersOfRetirements.slice(this.lastYears).map(e => e.total).reduce((a, b) => a + b, 0)
-  }
-
-  private get lastYears(): number {
-    return this.numbersOfEmployments.length - Math.min(this.numbersOfEmployments.length, 2)
+    const lastYears = Math.max(0, this.numbersOfRetirements.length-2)
+    return this.numbersOfRetirements.slice(lastYears).map(e => e.total).reduce((a, b) => a + b, 0)
   }
 }
