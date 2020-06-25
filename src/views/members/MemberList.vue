@@ -146,14 +146,9 @@ export default class MemberList extends Vue {
     this.search()
     try {
       this.departments = await DepartmentService.search()
-    } catch (err) {
-      console.error('部署の取得に失敗しました', err)
-      this.departments = []
-    }
-    try {
       this.teams = await TeamService.search()
     } catch (err) {
-      console.error('チームの取得に失敗しました', err)
+      this.departments = []
       this.teams = []
     }
   }
