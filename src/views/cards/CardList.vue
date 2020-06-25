@@ -99,10 +99,10 @@ export default class MemberList extends Vue {
     try {
       this.loading = true
 
-      const { memberStastics } = await StatisticsService.getAll()      
+      const { memberStastics } = await StatisticsService.getAll()
       this.members = Array(memberStastics.total).join(',').split(',').map(() => this.getDummyMember())
 
-      this.members = await MemberService.search()
+      this.members = await MemberService.getEmployees()
       this.departments = await DepartmentService.search()
       this.teams = await TeamService.search()
     } catch (err) {
