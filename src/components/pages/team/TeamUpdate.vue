@@ -80,8 +80,10 @@ export default class TeamUpdate extends Vue {
   @Prop({type: String, required: true})
   private id: string
 
+  @Prop({type: Array, default: () => []})
+  private members: Array<Member>
+  
   private team: Team = TeamService.newInstance()
-  private members: Array<Member> = []
   private dialog: boolean = false
   private valid: boolean = false
   private initing: boolean = false
@@ -109,10 +111,6 @@ export default class TeamUpdate extends Vue {
     } finally {
       this.initing = false
     }
-  }
-  
-  async created() {
-    this.members = await MemberService.search()
   }
 
   private async update() {

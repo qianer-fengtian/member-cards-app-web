@@ -137,7 +137,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Watch} from 'vue-property-decorator'
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator'
 import {Member, genders, joiningForms } from '@/models/member/Member'
 import {MemberRules} from '@/models/member/MemberRules'
 import MemberService from '@/models/member/MemberService'
@@ -153,9 +153,13 @@ import TeamService from '@/models/team/TeamService'
   },
 })
 export default class MemberRegister extends Vue {
+  @Prop({type: Array, default: () => []})
+  private departments: Array<Department>
+
+  @Prop({type: Array, default: () => []})
+  private teams: Array<Team> 
+
   private member: Member = MemberService.newInstance()
-  private departments: Array<Department> = []
-  private teams: Array<Team> = []
   private dialog: boolean = false
   private loading: boolean = false
   private valid: boolean = false
@@ -179,11 +183,6 @@ export default class MemberRegister extends Vue {
   @Watch('dialog')
   private dialogChanged() {
     this.member = MemberService.newInstance()
-  }
-
-  async created() {
-    this.departments = await DepartmentService.search()
-    this.teams = await TeamService.search()
   }
 
   private async register() {

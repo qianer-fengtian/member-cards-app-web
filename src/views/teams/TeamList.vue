@@ -26,12 +26,16 @@
               hide-details
             />
             <v-spacer />
-            <TeamRegister @after="search" />
+            <TeamRegister
+              :members="members"
+              @after="search"
+            />
           </v-toolbar>
         </template>
         <template v-slot:item.action="{ item }">
           <TeamUpdate
             :id="item.id"
+            :members="members"
             @after="search"
           />
           <TeamRemove
@@ -52,6 +56,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import {Team} from '@/models/team/Team'
 import TeamService from '@/models/team/TeamService'
+import {Member} from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
 
 @Component({
@@ -63,6 +68,7 @@ import MemberService from '@/models/member/MemberService'
 })
 export default class TeamList extends Vue {
   private teams: Array<Team> = []
+  private members: Array<Member> = []
   private memberNameMap: Map<string, string> = new Map()
   private dialog: boolean = false
   private loading: boolean  = false
@@ -98,7 +104,8 @@ export default class TeamList extends Vue {
     try {
       this.loading = true
       this.teams = await TeamService.search()
-      this.memberNameMap = await MemberService.getNameMap()
+      this.members = await MemberService.search()
+      this.memberNameMap = await MemberService.getNameMap(this.members)
       this.teams.forEach(team => {
         team.leaderName = this.memberNameMap.get(team.leaderId) || ''
       })

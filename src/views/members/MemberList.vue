@@ -26,12 +26,18 @@
               hide-details
             />
             <v-spacer />
-            <MemberRegister @after="search" />
+            <MemberRegister
+              :departments="departments"
+              :teams="teams"
+              @after="search"
+            />
           </v-toolbar>
         </template>
         <template v-slot:item.action="{ item }">
           <MemberUpdate
             :id="item.id"
+            :departments="departments"
+            :teams="teams"
             @after="search"
           />
           <MemberRemove
@@ -52,7 +58,9 @@
 import {Component, Vue, Prop} from 'vue-property-decorator'
 import {Member, joiningForms } from '@/models/member/Member'
 import MemberService from '@/models/member/MemberService'
+import {Department} from '@/models/department/Department'
 import DepartmentService from '@/models/department/DepartmentService'
+import {Team} from '@/models/team/Team'
 import TeamService from '@/models/team/TeamService'
 
 @Component({
@@ -64,8 +72,8 @@ import TeamService from '@/models/team/TeamService'
 })
 export default class MemberList extends Vue {
   private members: Array<Member> = []
-  private departmentNameMap: Map<string, string> = new Map()
-  private teamNameMap: Map<string, string> = new Map()
+  private departments: Array<Department> = []
+  private teams: Array<Team> = []
   private dialog: boolean = false
   private loading: boolean  = false
   private keyword: string = ''
@@ -134,8 +142,20 @@ export default class MemberList extends Vue {
     ];
   }
 
-  created() {
+  async created() {
     this.search()
+    try {
+      this.departments = await DepartmentService.search()
+    } catch (err) {
+      console.error('部署の取得に失敗しました', err)
+      this.departments = []
+    }
+    try {
+      this.teams = await TeamService.search()
+    } catch (err) {
+      console.error('チームの取得に失敗しました', err)
+      this.teams = []
+    }
   }
 
   private async search() {

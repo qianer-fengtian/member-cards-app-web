@@ -169,9 +169,13 @@ export default class MemberUpdate extends Vue {
   @Prop({type: String, required: true})
   private id: string
 
+  @Prop({type: Array, default: () => []})
+  private departments: Array<Department>
+
+  @Prop({type: Array, default: () => []})
+  private teams: Array<Team> 
+
   private member: Member = MemberService.newInstance()
-  private departments: Array<Department> = []
-  private teams: Array<Team> = []
   private dialog: boolean = false
   private valid: boolean = false
   private initing: boolean = false
@@ -207,11 +211,6 @@ export default class MemberUpdate extends Vue {
     } finally {
       this.initing = false
     }
-  }
-
-  async created() {
-    this.departments = await DepartmentService.search()
-    this.teams = await TeamService.search()
   }
 
   private async update() {
