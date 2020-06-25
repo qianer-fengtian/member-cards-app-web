@@ -67,7 +67,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import {Team} from '@/models/team/Team'
 import {TeamRules} from '@/models/team/TeamRules'
 import TeamService from '@/models/team/TeamService'
@@ -76,8 +76,10 @@ import MemberService from '@/models/member/MemberService'
 
 @Component
 export default class TeamRegister extends Vue {
+  @Prop({type: Array, default: () => []})
+  private members: Array<Member>
+
   private team: Team = TeamService.newInstance()
-  private members: Array<Member> = []
   private dialog: boolean = false  
   private valid: boolean = false
   private loading: boolean = false
@@ -93,10 +95,6 @@ export default class TeamRegister extends Vue {
   @Watch('dialog')
   private dialogChanged() {
     this.team = TeamService.newInstance()
-  }
-
-  async created() {
-    this.members = await MemberService.search()
   }
 
   private async register() {

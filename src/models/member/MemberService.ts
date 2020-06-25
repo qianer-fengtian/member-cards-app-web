@@ -36,8 +36,7 @@ export default {
     return Member.getInstance(res.data)
   },
 
-  async getNameMap(): Promise<Map<string, string>> {
-    const members = await this.search() 
+  async getNameMap(members: Member[]): Promise<Map<string, string>> {
     return new Map(members.map(member => [member.id, member.name]))
   },
 
