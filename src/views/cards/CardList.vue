@@ -103,6 +103,14 @@ export default class MemberList extends Vue {
       this.members = Array(memberStastics.total).join(',').split(',').map(() => this.getDummyMember())
 
       this.members = await MemberService.getEmployees()
+      
+      MemberService.getEmployeeAvatars().then(memberAvatars => {
+        const avatarMap = Object.fromEntries(memberAvatars.map(e => [e.id, e.avatar]))
+        for (const member of this.members) {
+          member.avatar = avatarMap[member.id]
+        }
+      })
+
       this.departments = await DepartmentService.search()
       this.teams = await TeamService.search()
     } catch (err) {

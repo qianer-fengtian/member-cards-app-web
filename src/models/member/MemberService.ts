@@ -1,5 +1,5 @@
 import axios from '@/plugins/axios'
-import {Member, MemberResponse, MemberStatistics} from '@/models/member/Member'
+import {Member, MemberResponse, MemberAvatar, MemberAvatarResponse, MemberStatistics} from '@/models/member/Member'
 import uuidv4 from 'uuid/v4'
 
 export default {
@@ -34,6 +34,11 @@ export default {
   async getEmployees(): Promise<Array<Member>> {
     const res = await axios.get("/members/employees")
     return res.data.map((e: MemberResponse) => Member.getInstance(e))
+  },
+  
+  async getEmployeeAvatars(): Promise<Array<MemberAvatar>> {
+    const res = await axios.get("/members/employees/avatars")
+    return res.data.map((e: MemberAvatarResponse) => MemberAvatar.getInstance(e))
   },
 
   async getRetirees(): Promise<Array<Member>> {

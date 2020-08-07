@@ -42,6 +42,30 @@ export type MemberResponse = {
   modifiedDate: number
 }
 
+export type MemberAvatarResponse = {
+  id: string
+  leftDate: number | null
+  avatar: string
+  deleted: boolean
+}
+
+export class MemberAvatar {
+  id: string
+  leftDate: number | null
+  avatar: string
+  deleted: boolean
+
+  private constructor() {}
+
+  static getInstance(res: MemberAvatarResponse): MemberAvatar {
+    const memberAvatar = new MemberAvatar()
+    memberAvatar.id = res.id
+    memberAvatar.leftDate = res.leftDate
+    memberAvatar.avatar = res.avatar
+    return memberAvatar
+  }
+}
+
 export class Member {
   id: string
   name: string
