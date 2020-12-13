@@ -14,7 +14,7 @@
       </v-col>
       <v-col cols="12">
         <template v-if="!loading">
-          <JoinedLeftComposition :statistics="statistics" />
+          <!-- <JoinedLeftComposition :statistics="statistics" /> -->
         </template>
       </v-col>
     </v-row>
