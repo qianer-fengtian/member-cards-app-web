@@ -45,17 +45,17 @@
     >
       <DashboardCard
         icon="account-convert"
-        title="直近3年の入退社数"
+        title="直近3年の入社数"
       >
         <v-row>
           <div class="total last-years-joined-total">
             {{ statistics.lastThreeYearsJoinedTotal }}
             <span class="caption">(入社)</span>
           </div>
-          <div class="total last-years-left-total">
+          <!-- <div class="total last-years-left-total">
             {{ statistics.lastThreeYearsLeftTotal }}
             <span class="caption">(退社)</span>
-          </div>
+          </div> -->
         </v-row>
       </DashboardCard>
     </v-col>
