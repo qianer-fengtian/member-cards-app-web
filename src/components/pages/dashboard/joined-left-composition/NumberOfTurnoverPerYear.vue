@@ -46,13 +46,13 @@ export default class NumberOfTurnoverPerYear extends Vue {
           borderWidth: 1,
           data: joinedData,
         },
-        {
-          label: '退社',
-          backgroundColor: '#FFCDD2',
-          borderColor: '#F44336',
-          borderWidth: 1,
-          data: leftData,
-        },
+        // {
+        //   label: '退社',
+        //   backgroundColor: '#FFCDD2',
+        //   borderColor: '#F44336',
+        //   borderWidth: 1,
+        //   data: leftData,
+        // },
       ],
     };
   }
